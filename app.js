@@ -4,6 +4,9 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+//var session = require('express-sessions');
+//var flash = require('express-flash');
+//var passport = require('passport');
 var bodyParser = require('body-parser');
 
 var user = require('./routes/user');
@@ -25,6 +28,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+//app.use(session({ secret: 'system' , resave: false, saveUninitialized: false}));
+//app.use(passport.initialize());
+//app.use(passport.session());
+//app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', user);
