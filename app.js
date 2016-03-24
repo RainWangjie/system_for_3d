@@ -28,7 +28,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-//app.use(session({ secret: 'system' , resave: false, saveUninitialized: false}));
+//app.use(session());
 //app.use(passport.initialize());
 //app.use(passport.session());
 //app.use(flash());
