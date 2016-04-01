@@ -1,24 +1,26 @@
 var express = require('express');
-var exphbs  = require('express-handlebars');
+var exphbs = require('express-handlebars');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
-//var session = require('express-sessions');
-//var flash = require('express-flash');
-//var passport = require('passport');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 
-var user = require('./routes/user');
+//路由
+var routes = require('./routes/index');
+var users = require('./routes/users');
+var admin = require('./routes/admin');
+
 
 var app = express();
 
-// view engine setup
+// view engine setup视图模版
 app.set('views', path.join(__dirname, 'views'));
 app.engine('hbs', exphbs({
-  layoutsDir: 'views',
-  defaultLayout: 'layout',
-  extname: '.hbs'
+    layoutsDir: 'views',
+    defaultLayout: 'layout',
+    extname: '.hbs'
 }));
 app.set('view engine', 'hbs');
 
@@ -26,43 +28,59 @@ app.set('view engine', 'hbs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-//app.use(session());
-//app.use(passport.initialize());
-//app.use(passport.session());
-//app.use(flash());
+app.use(session({
+    secret: '12345',
+    name: 'system',   //这里的name值得是cookie的name，默认cookie的name是：connect.sid
+    cookie: {maxAge: 600000 },  //设置maxAge是80000ms，即80s后session和相应的cookie失效过期
+    resave: false,
+    saveUninitialized: true
+}));
+//静态文件资源存放
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', user);
+//routes客户端中间件
+//app.get('/',function(req,res){
+//    console.log('重定向到首页');
+//    res.redirect('/index');
+//});
+app.use('/index', routes);
+app.use('/users', users);
+
+//routes后台中间件
+app.use('/admin', admin);
+
+//routes移动端中间件
+
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use(function (req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 // error handlers
 
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
+    app.use(function (err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
     });
-  });
 }
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
 
 
