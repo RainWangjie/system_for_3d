@@ -3,13 +3,17 @@ var router = express.Router();
 
 var UserEntity = require('../models/User').UserEntity;
 
-/* GET home page. */
+/* GET user page. */
 router.get('/', function (req, res, next) {
-    res.render('index', {title: '首页'});
+    console.log('注册登录页');
+    res.render('users', {title: '注册登录页'});
 });
-
+/*个人信息页*/
+router.get('/message', function (req, res, next) {
+    res.render('personCenter', {title: '个人信息'});
+});
 //注册路由
-router.post('/user/register', function (req, res, next) {
+router.post('/register', function (req, res, next) {
     var restResult = '';
     var mobile = req.body.mobile;
     if (!/1\d{10}/.test(mobile)) {//手机号码格式校验
@@ -52,10 +56,9 @@ router.post('/user/register', function (req, res, next) {
         });
 
     });
-
 });
 //登陆路由
-router.post('/user/login', function (req, res, next) {
+router.post('/login', function (req, res, next) {
     var restResult = '';
     var mobile = req.body.mobile;
     if (!/1\d{10}/.test(mobile)) {//手机号码格式校验
@@ -69,7 +72,6 @@ router.post('/user/login', function (req, res, next) {
         res.status(501).send(restResult);
         return;
     }
-
     UserEntity.findOne({mobile: mobile, password: password}, {password: 0}, function (err, user) {
         if (err) {
             restResult = "服务器异常";
@@ -82,14 +84,19 @@ router.post('/user/login', function (req, res, next) {
             res.status(501).send(restResult);
             return;
         }
-
-        restResult = user;
+        restResult = user.mobile + '登录成功';
+        req.session.user_id = user._id;
+        req.session.user_name = user.name;
         res.send(restResult);
 
         //更新最后登陆时间
         UserEntity.update({_id: user._id}, {$set: {lastLoginTime: new Date()}}).exec();
 
     });
+
+});
+//用户退出
+router.post('/logout', function (req, res, next) {
 
 });
 

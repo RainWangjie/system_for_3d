@@ -1,0 +1,1 @@
+define([],function(){function e(e){$(e).addClass("shake"),setTimeout(function(){$(e).removeClass("shake")},1e3)}return $.ajaxSetup({error:function(e){console.log(arguments),alert(e.responseText)}}),{shake:e}});

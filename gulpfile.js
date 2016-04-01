@@ -3,11 +3,11 @@
  */
 'use strict';
 var gulp = require('gulp');
-var uglify = require('gulp-uglify')
-var minifyCSS = require('gulp-minify-css')
+var uglify = require('gulp-uglify');
+var minifyCSS = require('gulp-minify-css');
 var sass = require('gulp-sass');
 
-gulp.task('default',['css', 'images'],function(){
+gulp.task('default',['css', 'images','js'],function(){
     console.log('gulp success!!!');
 });
 gulp.task("images", function () {

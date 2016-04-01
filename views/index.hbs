@@ -1,45 +1,8 @@
-<div class="operation">
-    <label>手机号:<input name="mobile" placeholder="请输入手机号" id="mobile" value="15757115750"></label>
-    <label>密码:<input name="passward" placeholder="请输入密码" id="passward" value="19931227"></label>
-    <div class="button">
-        <button data-action="register">注册</button>
-        <button data-action="login">登录</button>
-    </div>
+<div>
+    welcome my 3d model system!
+    <br>
+    首页推荐
+    <a href="/users">注册登录</a>
+    <a href="/users/message">个人中心</a>
+    <label>日期选择:<input type="date" id="date"></label>
 </div>
-<script type="text/javascript" src="/js/common/jquery.min.js"></script>
-<script>
-    $.ajaxSetup({
-        error: function(e){
-            console.log(arguments);
-            alert(e.responseText)
-        }
-    });
-    $('button').on('click',function(){
-        var mobile = $('#mobile').val();
-        if(!/1\d{10}/.test(mobile)){
-            alert('请输入正确手机号！');
-            return;
-        }
-        var password = $('#passward').val();
-        if(!password || password.length < 6){
-            alert('请输入大于6位的密码！');
-            return;
-        }
-        console.log('手机号',mobile,'密码：',password);
-        var data = {
-            mobile:mobile,
-            password:password
-        };
-        console.log($(this).data('action'));
-        if($(this).data('action') == 'register'){
-            $.post('/user/register',data,function(e){
-                    alert(e);
-            });
-        }else{
-            $.post('/user/login',data,function(e){
-                    alert('登录成功');
-            });
-        }
-
-    });
-</script>
