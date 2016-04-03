@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var isLogin = require('../routes/isLogin');
+
 var UserEntity = require('../models/User').UserEntity;
 
 /* GET user page. */
@@ -9,8 +11,21 @@ router.get('/', function (req, res, next) {
     res.render('users', {title: '注册登录页'});
 });
 /*个人信息页*/
-router.get('/message', function (req, res, next) {
-    res.render('personCenter', {title: '个人信息'});
+router.get('/message', isLogin.authorize, function (req, res, next) {
+    var restResult = '';
+    UserEntity.findOne({_id: req.session.user_id},{name:1,mobile:1,sex:1,birthday:1,_id:0},function (err, user) {
+        if (err) {//查询异常
+            restResult = "服务器异常";
+            res.send(restResult);
+            return;
+        }
+
+        if (user) {//手机号已注册
+            user.sex = isLogin.changeSex(user.sex);
+            console.log(user.sex);
+            res.render('personCenter', {title: '个人信息', user: user});
+        }
+    });
 });
 //注册路由
 router.post('/register', function (req, res, next) {
@@ -91,7 +106,6 @@ router.post('/login', function (req, res, next) {
 
         //更新最后登陆时间
         UserEntity.update({_id: user._id}, {$set: {lastLoginTime: new Date()}}).exec();
-
     });
 
 });

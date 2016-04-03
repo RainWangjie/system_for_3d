@@ -45,6 +45,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 //    console.log('重定向到首页');
 //    res.redirect('/index');
 //});
+//sh
+//
+
+//首页重定向到/index
+app.get('/',function(req,res){
+    console.log('首页重定向!');
+    res.redirect('/index');
+});
+
 app.use('/index', routes);
 app.use('/users', users);
 

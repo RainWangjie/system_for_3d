@@ -8,7 +8,7 @@ var minifyCSS = require('gulp-minify-css');
 var sass = require('gulp-sass');
 
 gulp.task('default',['css', 'images','js'],function(){
-    console.log('gulp success!!!');
+    console.log('gulp完成，yeah！！！');
 });
 gulp.task("images", function () {
     return gulp.src("resources/images/**")
