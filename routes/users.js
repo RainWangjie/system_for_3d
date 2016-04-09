@@ -6,14 +6,21 @@ var isLogin = require('../routes/isLogin');
 var UserEntity = require('../models/User').UserEntity;
 
 /* GET user page. */
-router.get('/', function (req, res, next) {
+router.get('/login', function (req, res, next) {
     console.log('注册登录页');
-    res.render('users', {title: '注册登录页'});
+    res.render('users', {title: '注册登录页',user_name:req.session.user_name,user_avatar:req.session.user_avatar});
 });
 /*个人信息页*/
 router.get('/message', isLogin.authorize, function (req, res, next) {
     var restResult = '';
-    UserEntity.findOne({_id: req.session.user_id},{name:1,mobile:1,sex:1,birthday:1,_id:0},function (err, user) {
+    UserEntity.findOne({_id: req.session.user_id}, {
+        name: 1,
+        mobile: 1,
+        sex: 1,
+        birthday: 1,
+        avatar: 1,
+        _id: 0
+    }, function (err, user) {
         if (err) {//查询异常
             restResult = "服务器异常";
             res.send(restResult);
@@ -21,9 +28,7 @@ router.get('/message', isLogin.authorize, function (req, res, next) {
         }
 
         if (user) {//手机号已注册
-            user.sex = isLogin.changeSex(user.sex);
-            console.log(user.sex);
-            res.render('personCenter', {title: '个人信息', user: user});
+            res.render('personCenter', {title: '个人信息', user: user,user_name:req.session.user_name,user_avatar:req.session.user_avatar});
         }
     });
 });
@@ -74,34 +79,40 @@ router.post('/register', function (req, res, next) {
 });
 //登陆路由
 router.post('/login', function (req, res, next) {
-    var restResult = '';
+    var restResult = {
+        result: '',
+        url: ''
+    };
     var mobile = req.body.mobile;
     if (!/1\d{10}/.test(mobile)) {//手机号码格式校验
-        restResult = "请填写真确的手机格式";
-        res.status(501).send(restResult);
+        restResult.result = "请填写真确的手机格式";
+        res.status(501).send(restResult.result);
         return;
     }
     var password = req.body.password;
     if (!password) {
-        restResult = "密码不能为空";
-        res.status(501).send(restResult);
+        restResult.result = "密码不能为空";
+        res.status(501).send(restResult.result);
         return;
     }
     UserEntity.findOne({mobile: mobile, password: password}, {password: 0}, function (err, user) {
         if (err) {
-            restResult = "服务器异常";
-            res.send(restResult);
+            restResult.result = "服务器异常";
+            res.status(500).send(restResult.result);
             return;
         }
 
         if (!user) {
-            restResult = "用户名或密码错误";
-            res.status(501).send(restResult);
+            restResult.result = "用户名或密码错误";
+            res.status(501).send(restResult.result);
             return;
         }
-        restResult = user.mobile + '登录成功';
+        restResult.result = user.mobile + '登录成功';
         req.session.user_id = user._id;
         req.session.user_name = user.name;
+        req.session.user_avatar = user.avatar;
+
+        restResult.url = '/index';
         res.send(restResult);
 
         //更新最后登陆时间
@@ -109,9 +120,75 @@ router.post('/login', function (req, res, next) {
     });
 
 });
-//用户退出
-router.post('/logout', function (req, res, next) {
-
+//用户退出路由
+router.get('/logout', function (req, res, next) {
+    delete  req.session.user_id;
+    res.redirect('/index');
 });
+//更新个人信息接口
+router.post('/update', isLogin.authorize, function (req, res, next) {
+    console.log(req.body);
+    if (!req.body.name) {
+        res.status(501).send('参数错误');
+        return;
+    }
+    if (!req.body.mobile) {
+        res.status(501).send('参数错误');
+        return;
+    }
+    if (!req.body.sex) {
+        res.status(501).send('参数错误');
+        return;
+    }
+    if (!req.body.birthday) {
+        res.status(501).send('参数错误');
+        return;
+    }
+    UserEntity.update({'_id': req.session.user_id}, req.body, function (err, user) {
+        var restResult = '';
+        if (err) {
+            restResult = "服务器异常";
+            res.status(500).send(restResult);
+            return;
+        } else {
+            req.session.user_id = user._id;
+            req.session.user_name = user.name;
+            req.session.user_avatar = user.avatar;
+            res.send('更新成功');
+        }
+    });
+});
+//重置密码接口
+router.post('/resetPassword', isLogin.authorize, function (req, res, next) {
+    var restResult = '';
+    UserEntity.findOne({_id: req.session.user_id}, {password: 1}, function (err, user) {
+        if (err) {//查询异常
+            restResult = "服务器异常";
+            res.status(500).send(restResult);
+            return;
+        }
+        if (user.password !== req.body.oldPassword) {
+            restResult = "密码错误";
+            res.status(501).send(restResult);
+            return;
+        } else {
+            if (req.body.newPassword1 === req.body.newPassword2) {
+                UserEntity.update({'_id': req.session.user_id}, {password: req.body.newPassword1}, function (err, user) {
+                    var restResult = '';
+                    if (err) {
+                        restResult = "服务器异常";
+                        res.status(500).send(restResult);
+                    } else {
+                        res.send('更新成功');
+                    }
+                });
+            } else {
+                restResult = '两次密码不一致';
+                res.status(501).send(restResult);
+            }
+        }
+    });
+});
+//上传头像
 
 module.exports = router;

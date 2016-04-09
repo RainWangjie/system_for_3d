@@ -7,6 +7,7 @@ var UserScheme = new base.Schema({
     password: String,//密码
     mobile: String,//手机
     name:{type:String,default:'路人甲'},
+    avatar:{type:String,default:'http://7xs7nv.com1.z0.glb.clouddn.com/user%2Favatardefault_head.jpg'},
     sex: {type: String, default: 3},//性别
     birthday: {type: String, default: '1970-01-01'},//出生日期
     lastLoginTime: Date,//最后登陆时间

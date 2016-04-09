@@ -1,0 +1,25 @@
+.panel_popup {
+  width: 400px;
+  height: 300px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -200px;
+  margin-top: -150px;
+  transition: all .3s;
+  transform: translate(-300%, 0);
+  background: #f1f1f1;
+  border-radius: 5px;
+  text-align: center; }
+
+.panel_popup.show {
+  transform: translate(0, 0); }
+
+.user-avatar {
+  position: relative; }
+
+.user-avatar img {
+  vertical-align: top; }
+
+#btn_add_avatar {
+  vertical-align: bottom; }
