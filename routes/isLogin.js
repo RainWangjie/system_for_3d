@@ -4,8 +4,7 @@
 module.exports = {
     authorize: function (req, res, next) {
         if (!req.session.user_id) {
-            console.log('未登录，重定向到登录页！');
-            res.redirect('/users');
+            res.redirect('/users/login');
         } else {
             next();
         }

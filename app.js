@@ -11,6 +11,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
+var qiniu = require('./routes/qiniu');
 
 
 var app = express();
@@ -56,9 +57,11 @@ app.get('/',function(req,res){
 
 app.use('/index', routes);
 app.use('/users', users);
-
 //routes后台中间件
 app.use('/admin', admin);
+//获取qiniu的token
+app.use('/qiniu',qiniu);
+
 
 //routes移动端中间件
 

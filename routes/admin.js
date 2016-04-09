@@ -84,7 +84,6 @@ router.post('/deleteStyle', function (req, res, next) {
             }
             restResult = '删除成功';
             res.send(restResult);//返回成功结果
-
         });
 
     });

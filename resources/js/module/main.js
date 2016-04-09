@@ -5,20 +5,27 @@ require.config({
     baseUrl: '/js/',
     paths: {
         jquery: 'common/jquery.min',
+        bootstrap:'common/bootstrap.min',
         three: 'common/three.min',
-        util:'common/util'
+        util:'common/util',
+        plupload:'common/plupload.full.min',
+        qiniu:'common/qiniu.min'
     },
     shim: {
+        'module/personCenter':{
+            deps:['plupload','qiniu']
+        }
     }
 });
 
-require(['jquery','util'], function () {
+require(['jquery','bootstrap','util'], function () {
     console.log('jquery load success!!!');
 });
 
 var routes = [
     {url:'/index',module:'module/index'},
-    {url:'/user',module:'module/users'},
+    {url:'/users/login',module:'module/users'},
+    {url:'/users/message',module:'module/personCenter'},
     //管理员
     {url:'/admin/style',module:'admin/style'}
 ];
