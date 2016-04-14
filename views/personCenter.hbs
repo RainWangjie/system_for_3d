@@ -40,8 +40,10 @@
             <input type="date" value="{{user.birthday}}" id="user_birthday">
         </div>
     </div>
-    <button class="btn" id="btn_update_message">保存</button>
-    <button class="btn" id="btn_reset_password">重置密码</button>
+    <div style="text-align: center">
+        <button class="btn" id="btn_update_message">保存</button>
+        <button class="btn" id="btn_reset_password">重置密码</button>
+    </div>
 
     <div class="panel_popup panel_reset_password">
         <label>原密码：<input type="password" placeholder="请输入原密码" id="old_password"></label><br>
@@ -51,6 +53,30 @@
         <button id="btn_reset_password_2">取消</button>
     </div>
 </div>
+<div class="col-md-12 user-model-list">
+
+</div>
 <script>
     var user = {{{user}}};
+</script>
+<script id="tpl" type="text/html">
+    <%for(var i in model){
+    var item = model[i];%>
+    <div class="col-md-4" style="border: 1px solid #c1c1c1;padding: 15px">
+        <a href="/models/web/<%=item._id%>" class="model-preview-img">
+            <img src="<%=item.previewImg%>" width="100%">
+        </a>
+        <div>
+            <span>模型名称：<%=item.name%></span><br>
+            <span>审核状态：
+                <%if(item.isPass){%>
+                审核通过
+                <%}else{%>
+                未审核
+                <%}%>
+            </span>
+        </div>
+    </div>
+    <%}%>
+
 </script>

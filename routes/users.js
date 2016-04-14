@@ -72,7 +72,6 @@ router.post('/register', function (req, res, next) {
             }
             restResult = '注册成功';
             res.send(restResult);//返回成功结果
-
         });
 
     });
@@ -123,6 +122,8 @@ router.post('/login', function (req, res, next) {
 //用户退出路由
 router.get('/logout', function (req, res, next) {
     delete  req.session.user_id;
+    delete  req.session.user_name;
+    delete  req.session.user_avatar;
     res.redirect('/index');
 });
 //更新个人信息接口
