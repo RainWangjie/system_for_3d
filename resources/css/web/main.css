@@ -15,6 +15,11 @@
 .panel_popup.show {
   transform: translate(0, 0); }
 
+#progress {
+  position: fixed;
+  top: 50px;
+  right: 20px; }
+
 .user-avatar {
   position: relative; }
 
@@ -23,3 +28,28 @@
 
 #btn_add_avatar {
   vertical-align: bottom; }
+
+.user-model-list {
+  margin-top: 20px; }
+
+.model-preview-img {
+  display: block;
+  position: relative;
+  width: 100%; }
+
+.model-preview-img:after {
+  content: '';
+  display: block;
+  padding-top: 100%; }
+
+.model-preview-img img {
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+textarea {
+  width: 300px;
+  height: 100px; }
+
+.audit-message div {
+  text-align: center; }

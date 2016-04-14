@@ -1,0 +1,1 @@
+define([],function(){$(".model-audit-pass").on("click",function(){var i=$(this).data("id"),t=$(this);$.post("/admin/audit/pass/"+i,function(i){alert(i),t.parents(".col-md-4").remove()})}),$(".model-audit-failed").on("click",function(){var i=$(this).data("id"),t=$(this);$.post("/admin/audit/failed/"+i,function(i){alert(i),t.parents(".col-md-4").remove()})})});

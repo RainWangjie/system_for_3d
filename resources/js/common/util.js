@@ -52,8 +52,6 @@ define(['jquery'], function ($) {
         });
     }
 
-
-
     return {
         shake: shake_input,
         initQiniu:initQiniu

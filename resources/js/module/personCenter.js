@@ -1,7 +1,7 @@
 /**
  * Created by gewangjie on 16/4/5.
  */
-define(['util'], function (util) {
+define(['util','tplM'], function (util,tplM) {
     var user_data = user,
         isAvatar = true;
     $('#user_sex').val(user_data.sex);
@@ -100,4 +100,9 @@ define(['util'], function (util) {
         console.log(res);
     }
 
+    $.get('/models/userfind',function(e){
+        console.log(e);
+        var dest = $.tpl('tpl', {model:e});
+        $('.user-model-list').html(dest);
+    });
 });

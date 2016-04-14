@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 //路由
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var models = require('./routes/models');
 var admin = require('./routes/admin');
 var qiniu = require('./routes/qiniu');
 
@@ -57,6 +58,7 @@ app.get('/',function(req,res){
 
 app.use('/index', routes);
 app.use('/users', users);
+app.use('/models', models);
 //routes后台中间件
 app.use('/admin', admin);
 //获取qiniu的token

@@ -1,0 +1,20 @@
+<div class="col-md-12">
+    {{# each models}}
+        <div class="col-md-4">
+            <a href="/admin/audit/{{_id}}" class="model-preview-img">
+                <img src="{{previewImg}}" width="100%">
+            </a>
+            <div class="audit-message">
+                模型名称: {{name}}<br>
+                模型描述:{{descriptions}}<br>
+                模型分类: {{typeId}}<br>
+                创建时间:{{createTime}}
+                <div>
+                    <button class="btn btn-sm btn-success model-audit-pass" data-id="{{_id}}">审核通过</button>
+                    <button class="btn btn-sm btn-danger model-audit-failed" data-id="{{_id}}">审核下架</button>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+</div>
+

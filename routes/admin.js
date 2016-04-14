@@ -5,10 +5,12 @@ var express = require('express');
 var router = express.Router();
 
 var StyleEntity = require('../models/Style').StyleEntity;
+var ModelEntity = require('../models/Model').ModelEntity;
+var localFileEntity = require('../models/localFile').localFileEntity;
 
 router.get('/', function (req, res, next) {
     console.log('后台管理');
-    res.render('admin/index', {title: '后台管理'});
+    res.render('admin/index', {title: '后台管理', user_name: req.session.user_name, user_avatar: req.session.user_avatar});
 });
 //类型管理页面
 router.get('/style', function (req, res, next) {
@@ -62,7 +64,7 @@ router.post('/deleteStyle', function (req, res, next) {
     var restResult = '';
     var id = req.body.id;
     console.log(id);
-    StyleEntity.findOne({_id:id}, function (err, style) {
+    StyleEntity.findOne({_id: id}, function (err, style) {
         if (err) {//查询异常
             restResult = "服务器异常";
             res.send(restResult);
@@ -76,7 +78,7 @@ router.post('/deleteStyle', function (req, res, next) {
         }
 
         //调用实体的实例的保存方法
-        StyleEntity.remove({_id:id},function (err, style) {
+        StyleEntity.remove({_id: id}, function (err, style) {
             if (err) {//服务器保存异常
                 restResult = "服务器异常";
                 res.send(restResult);
@@ -89,5 +91,80 @@ router.post('/deleteStyle', function (req, res, next) {
     });
 
 });
+//模型审核页面
+router.get('/audit', function (req, res, next) {
+    console.log('后台管理-模型审核');
+    ModelEntity.find({isPass: false}, function (err, model) {
+        var restResult = '';
+        if (err) {//查询异常
+            restResult = "服务器异常";
+            console.log(err);
+            res.send(restResult);
+            return;
+        }
 
+        if (model) {//model存在
+            res.render('admin/audit', {
+                title: '后台管理-模型审核',
+                user_name: req.session.user_name,
+                user_avatar: req.session.user_avatar,
+                models: model
+            });
+        }
+    });
+});
+//模型审核预览页面
+router.get('/audit/:modelid', function (req, res, next) {
+    ModelEntity.findOne({_id: req.params.modelid}, function (err, model) {
+        var restResult = '';
+        if (err) {//查询异常
+            restResult = "服务器异常";
+            console.log(err);
+            res.send(restResult);
+            return;
+        }
+        if (model) {//model存在
+            res.render('webPreview', {
+                title: model.name,
+                model: model,
+                user_name: req.session.user_name,
+                user_avatar: req.session.user_avatar
+            });
+        }
+    });
+});
+//模型审核通过接口
+router.post('/audit/pass/:modelid', function (req, res, next) {
+    ModelEntity.update({'_id': req.params.modelid}, {isPass: true}, function (err) {
+        var restResult = '';
+        if (err) {
+            restResult = "服务器异常";
+            res.status(500).send(restResult);
+            return;
+        } else {
+            res.send('审核成功');
+        }
+    });
+});
+//模型审核下架接口
+router.post('/audit/failed/:modelid', function (req, res, next) {
+    ModelEntity.remove({'_id': req.params.modelid}, function (err) {
+        var restResult = '';
+        if (err) {
+            restResult = "服务器异常";
+            res.status(500).send(restResult);
+            return;
+        } else {
+            localFileEntity.remove({modelId: req.params.modelid}, function (err) {
+                if (err) {
+                    restResult = "服务器异常";
+                    res.status(500).send(restResult);
+                    return;
+                } else {
+                    res.send('下架成功');
+                }
+            });
+        }
+    });
+});
 module.exports = router;
