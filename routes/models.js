@@ -4,6 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var isLogin = require('../routes/isLogin');
+var qiniu_mySelf  = require('../routes/qiniu');
 var http = require('http');
 var fs = require('fs');
 var qiniu = require("qiniu");
@@ -45,7 +46,7 @@ router.post('/upload', isLogin.authorize, function (req, res, next) {
     var imgUrlList = req.body.imgUrl.split(',');
     var imgNameList = req.body.imgName.split(',');
     for (var i in imgUrlList) {
-        newModel.imgUrl.push('http://7xs7nv.com1.z0.glb.clouddn.com/' + imgUrlList[i]);
+        newModel.imgUrl.push(imgUrlList[i]);
     }
     newModel.save(function (err, model) {
         var restResult = '';
@@ -85,7 +86,7 @@ router.post('/upload', isLogin.authorize, function (req, res, next) {
                 var imgFile = new localFileEntity({
                     modelId: model._id,
                     fileName: imgNameList[i],
-                    qiniuUrl: 'http://7xs7nv.com1.z0.glb.clouddn.com/' + imgUrlList[i]
+                    qiniuUrl: imgUrlList[i]
                 });
                 imgFile.save(function (err) {
                     var restResult = '';
@@ -98,13 +99,60 @@ router.post('/upload', isLogin.authorize, function (req, res, next) {
             }
             restResult = '上传成功';
             res.send(restResult);//返回成功结果
-            http.get(req.body.mtlUrl, function (response) {
-                var filePath = '../tempMTL/up'+req.body.mtlName;
-                var file = fs.createWriteStream(filePath);
+            http.get('http://7xs7nv.com1.z0.glb.clouddn.com/' + req.body.mtlUrl, function (response) {
+                var filePath_download = './tempMTL/download_'+req.body.mtlName;
+                var filePath_upload = './tempMTL/upload_'+req.body.mtlName;
+                var file = fs.createWriteStream(filePath_download);
                 response.pipe(file);
-                fs.readFile(filePath,function(err,data){
-                    if(err) throw err;
-                    console.log(data);
+                response.on('end',function(){
+                    fs.readFile(filePath_download,'utf-8',function(err,data){
+                        if(err) throw err;
+                        console.log("读取数据成功！");
+                        var fileContent = data.toString();
+                        console.log("--------我是分割线-------------");
+                        for(var i in imgNameList){
+                            var reg=new RegExp(imgNameList[i],"g");
+                            console.log(imgNameList[i],reg.test(imgNameList[i]));
+                            console.log(imgNameList[i]+'替换成'+imgUrlList[i]);
+                            fileContent = fileContent.replace(reg,imgUrlList[i]);
+                        }
+                        console.log("--------我是分割线-------------");
+                        fs.writeFile(filePath_upload,fileContent, function(err) {
+                            if (err) {
+                                return console.error(err);
+                            }
+                            console.log("--------我是分割线-------------");
+                            console.log("数据写入成功！");
+                            console.log("上传qiniu...");
+
+                            //构造上传函数
+                            function uploadFile(uptoken,localFile) {
+                                var extra = new qiniu.io.PutExtra();
+                                qiniu.io.putFile(uptoken,'', localFile, extra, function(err, ret) {
+                                    if(!err) {
+                                        // 上传成功， 处理返回值
+                                        //console.log(ret.hash, ret.key, ret.persistentId);
+                                        console.log("上传qiniu success");
+                                        ModelEntity.update({'_id': model._id}, {
+                                            mtlUrl:ret.key,
+                                            isTranslate:true
+                                        },function(err,model){
+                                            if (err) {//服务器保存异常
+                                                console.log(err);
+                                                return;
+                                            }
+                                            console.log("MongoDB updata success!!!");
+                                        })
+                                    } else {
+                                        // 上传失败， 处理返回代码
+                                        console.log(err);
+                                    }
+                                });
+                            }
+                            //调用uploadFile上传
+                            uploadFile(uptoken(bucket),filePath_upload);
+                        });
+                    });
                 });
             });
         }
@@ -158,6 +206,48 @@ router.get('/web/:modelid', function (req, res, next) {
         }
     });
 });
+//web端指定模型预览
+router.get('/h5/:modelid', function (req, res, next) {
+    ModelEntity.findOne({_id: req.params.modelid}, function (err, model) {
+        var restResult = '';
+        if (err) {//查询异常
+            restResult = "服务器异常";
+            console.log(err);
+            res.send(restResult);
+            return;
+        }
+        if (model) {//model存在
+            if (model.userId == req.session.user_id) {
+                UserEntity.findOne({_id: model.userId}, function (err, user) {
+                    res.render('webPreview', {
+                        title: model.name,
+                        model: model,
+                        model_user_name: user.name,
+                        model_user_avatar: user.avatar,
+                        model_user_sex: user.sex,
+                        user_name: req.session.user_name,
+                        user_avatar: req.session.user_avatar
+                    });
+                });
+            } else {
+                console.log('查看模型user不匹配重定向首页!');
+                res.redirect('/index');
+            }
+        }
+    });
+});
+
+//需要填写你的 Access Key 和 Secret Key
+qiniu.conf.ACCESS_KEY = '1xLOwApwb7DxXxFtR9czJ33LvGPULks4xABiiAX5';
+qiniu.conf.SECRET_KEY = '86YYdqGfUdXLDmro3R4yJKTyUBat4hrpXBraf2zD';
+//要上传的空间
+bucket = 'systemfor3d';
+//构建上传策略函数
+function uptoken(bucket, key) {
+    var putPolicy = new qiniu.rs.PutPolicy(bucket);
+    return putPolicy.token();
+}
+
 module.exports = router;
 
 
