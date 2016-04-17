@@ -9,6 +9,7 @@ var ModelScheme = new base.Schema({
     userId:String,//创建者ID
     typeId:String,//分类ID
     isPass:{type: Boolean, default: false},//是否通过审核
+    isTranslate:{type: Boolean, default: false},//mtl文件字符串替换
     createTime: {type: Date, default: Date.now},//创建时间
     previewImg:String,//模型预览图
     objUrl:String,//obj文件七牛链接

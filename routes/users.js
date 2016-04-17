@@ -190,6 +190,6 @@ router.post('/resetPassword', isLogin.authorize, function (req, res, next) {
         }
     });
 });
-//上传头像
+
 
 module.exports = router;

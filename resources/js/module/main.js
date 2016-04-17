@@ -18,6 +18,9 @@ require.config({
         tplM:'common/tpl'
     },
     shim: {
+        'bootstrap':{
+            deps: ['jquery']
+        },
         'module/personCenter': {
             deps: ['plupload', 'qiniu']
         },
@@ -58,7 +61,7 @@ var routes = [
 ];
 
 var href = location.pathname;
-require(['jquery', 'bootstrap', 'util'], function () {
+require(['bootstrap', 'util'], function () {
     console.log('jquery load success!!!');
     routes.forEach(function (item) {
         if ((new RegExp(item.url)).test(href)) {
