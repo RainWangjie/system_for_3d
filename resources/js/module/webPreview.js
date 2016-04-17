@@ -2,7 +2,7 @@
  * Created by gewangjie on 16/4/13.
  */
 define([], function () {
-    console.log('PC端模型预览!!!');
+    console.log('PC端模型预览改版!!!');
     var scene_width = $('.col-md-9').width(),
         scene_height = scene_width / 1.5;
     var scene = new THREE.Scene();
@@ -15,12 +15,12 @@ define([], function () {
     mtlLorder.setBaseUrl('http://7xs7nv.com1.z0.glb.clouddn.com/');
     mtlLorder.setPath('http://7xs7nv.com1.z0.glb.clouddn.com/');
     mtlLorder.crossOrigin = '*';
-    mtlLorder.load('RB-OptimusBoss.mtl', function (materials) {
+    mtlLorder.load('FjfeGraLUl137M7Yh9cA57Fa7Eyd', function (materials) {
         materials.preload();
         var objLoader = new THREE.OBJLoader();
         objLoader.setMaterials(materials);
         objLoader.setPath('http://7xs7nv.com1.z0.glb.clouddn.com/');
-        objLoader.load('RB-OptimusBoss.obj', function (jingang) {
+        objLoader.load('FjFj5HDtPzaoUJOCyVOlyThYyqbq', function (jingang) {
             jingang.scale.set(.1, .1, .1);
             jingang.position.x = 30;
             jingang.rotation.x = -.5 * Math.PI;
