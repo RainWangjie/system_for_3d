@@ -7,19 +7,19 @@ require.config({
         jquery: 'common/jquery.min',
         bootstrap: 'common/bootstrap.min',
         three: 'common/three.min',
-        stat:'common/stat.min',
-        DDSLoader:'common/DDSLoader',
-        OBJLoader:'common/OBJLoader',
-        MTLLoader:'common/MTLLoader',
-        OBJMTLLoader:'common/OBJMTLLoader',
-        OrbitControls:'common/OrbitControls',
+        stat: 'common/stat.min',
+        DDSLoader: 'common/DDSLoader',
+        OBJLoader: 'common/OBJLoader',
+        MTLLoader: 'common/MTLLoader',
+        OBJMTLLoader: 'common/OBJMTLLoader',
+        OrbitControls: 'common/OrbitControls',
         util: 'common/util',
         plupload: 'common/plupload.full.min',
         qiniu: 'common/qiniu.min',
-        tplM:'common/tpl'
+        tplM: 'common/tpl'
     },
     shim: {
-        'bootstrap':{
+        'bootstrap': {
             deps: ['jquery']
         },
         'module/personCenter': {
@@ -28,23 +28,23 @@ require.config({
         'module/uploadModels': {
             deps: ['plupload', 'qiniu']
         },
-        'OBJMTLLoader':{
-            deps:['OBJLoader','MTLLoader','DDSLoader']
+        'OBJMTLLoader': {
+            deps: ['OBJLoader', 'MTLLoader', 'DDSLoader']
         },
-        'OBJLoader':{
-          deps:['three']
+        'OBJLoader': {
+            deps: ['three']
         },
-        'MTLLoader':{
-            deps:['three']
+        'MTLLoader': {
+            deps: ['three']
         },
-        'DDSLoader':{
-          deps:['three']
+        'DDSLoader': {
+            deps: ['three']
         },
-        'OrbitControls':{
-            deps:['three']
+        'OrbitControls': {
+            deps: ['three']
         },
-        'module/webPreview':{
-            deps:['OrbitControls','OBJMTLLoader','stat']
+        'module/webPreview': {
+            deps: ['OrbitControls', 'OBJMTLLoader', 'stat']
         }
     }
 });
@@ -57,7 +57,8 @@ var routes = [
     {url: '/models/web', module: 'module/webPreview'},
     //管理员
     {url: '/admin/style', module: 'admin/style'},
-    {url: '/admin/audit', module: 'admin/audit'}
+    {url: '/admin/audit', module: 'admin/audit'},
+    {url: '/admin/webPreview', module: 'module/webPreview'}
 
 ];
 
