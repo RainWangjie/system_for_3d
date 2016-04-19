@@ -12,6 +12,7 @@ router.get('/', function (req, res, next) {
     console.log('后台管理');
     res.render('admin/index', {title: '后台管理', user_name: req.session.user_name, user_avatar: req.session.user_avatar});
 });
+
 //类型管理页面
 router.get('/style', function (req, res, next) {
     console.log('后台管理-类型管理');
@@ -114,7 +115,7 @@ router.get('/audit', function (req, res, next) {
     });
 });
 //模型审核预览页面
-router.get('/audit/:modelid', function (req, res, next) {
+router.get('/webPreview/:modelid', function (req, res, next) {
     ModelEntity.findOne({_id: req.params.modelid}, function (err, model) {
         var restResult = '';
         if (err) {//查询异常
@@ -167,4 +168,5 @@ router.post('/audit/failed/:modelid', function (req, res, next) {
         }
     });
 });
+
 module.exports = router;
