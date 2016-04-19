@@ -18,7 +18,6 @@ function uptoken(bucket, key) {
 //生成上传 Token
 router.get('/token', function (req,res,next) {
     token = uptoken(bucket);
-    //console.log(token);
     res.send(token);
 });
 module.exports = router;

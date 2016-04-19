@@ -1,1 +1,1 @@
-define([],function(){$("#date").on("change",function(){console.log($(this).val())})});
+define([],function(){});

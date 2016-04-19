@@ -20,6 +20,21 @@
   top: 50px;
   right: 20px; }
 
+.user-login {
+  width: 100%; }
+
+.users_operation {
+  border: 1px solid #323232;
+  border-radius: 5px;
+  box-shadow: -3px -3px 0 0 #646464 inset;
+  margin: 100px auto;
+  width: 300px;
+  padding: 10px; }
+
+.users_button {
+  margin-top: 20px;
+  text-align: center; }
+
 .user-avatar {
   position: relative; }
 

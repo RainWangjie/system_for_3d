@@ -1,6 +1,7 @@
 .idea/
 /node_modules
 /bower_components
+/tempMTL
 ####################################
 ######## OS generated files ########
 ####################################

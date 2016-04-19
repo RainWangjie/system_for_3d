@@ -7,26 +7,36 @@ define([], function () {
         scene_height = scene_width / 1.5;
     var scene = new THREE.Scene();
     var clock = new THREE.Clock();
-
-
+    var stat = null;
+    function init() {
+        stat = new Stats();
+        stat.domElement.style.position = 'absolute';
+        stat.domElement.style.top = 'auto';
+        document.body.appendChild(stat.domElement);
+    }
+    init();
     //obj+mtl
+    var axisHelper = new THREE.AxisHelper(100);
+    scene.add( axisHelper );
+
     THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader);
     var mtlLorder = new THREE.MTLLoader();
     mtlLorder.setBaseUrl('http://7xs7nv.com1.z0.glb.clouddn.com/');
     mtlLorder.setPath('http://7xs7nv.com1.z0.glb.clouddn.com/');
     mtlLorder.crossOrigin = '*';
-    mtlLorder.load('FjfeGraLUl137M7Yh9cA57Fa7Eyd', function (materials) {
+    mtlLorder.load(mtlUrl, function (materials) {
         materials.preload();
         var objLoader = new THREE.OBJLoader();
         objLoader.setMaterials(materials);
         objLoader.setPath('http://7xs7nv.com1.z0.glb.clouddn.com/');
-        objLoader.load('FjFj5HDtPzaoUJOCyVOlyThYyqbq', function (jingang) {
-            jingang.scale.set(.1, .1, .1);
-            jingang.position.x = 30;
-            jingang.rotation.x = -.5 * Math.PI;
-            jingang.rotation.z = -.25 * Math.PI;
-            scene.add(jingang);
-        })
+        objLoader.load(objUrl, function (obj_model) {
+            obj_model.scale.set(model_option[0],model_option[0],model_option[0]);
+            //obj_model.position.y = -50;
+            obj_model.rotation.x = model_option[1]/180 * Math.PI;
+            obj_model.rotation.y = model_option[2]/180 * Math.PI;
+            obj_model.rotation.z = model_option[3]/180 * Math.PI;
+            scene.add(obj_model);
+        }, onProgress, onError);
     });
 
 
@@ -45,7 +55,7 @@ define([], function () {
 
     scene.add(new THREE.AmbientLight(0x101030));
 
-    var camera = new THREE.PerspectiveCamera(45, scene_width/scene_height, .1, 1000);
+    var camera = new THREE.PerspectiveCamera(45, scene_width / scene_height, .1, 1000);
     camera.position.set(200, 200, 200);
     camera.lookAt(scene.position);
 
@@ -58,7 +68,9 @@ define([], function () {
     controls.addEventListener('change', render);
 
     function render() {
+        stat.begin();
         renderer.render(scene, camera);
+        stat.end();
     }
 
     animate();
@@ -69,4 +81,13 @@ define([], function () {
         window.requestAnimationFrame(animate);
         render()
     }
+
+    var onProgress = function (xhr) {
+        if (xhr.lengthComputable) {
+            var percentComplete = xhr.loaded / xhr.total * 100;
+            console.log(Math.round(percentComplete, 2) + '% downloaded');
+        }
+    };
+    var onError = function (xhr) {
+    };
 });

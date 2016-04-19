@@ -24,8 +24,16 @@ gulp.task("css", ['sass'], function () {
         .pipe(minifyCSS())
         .pipe(gulp.dest("public/css/"));
 });
-gulp.task("js", function () {
-    return gulp.src("resources/js/*/*.js")
+gulp.task("commonJS", function () {
+    return gulp.src("resources/js/common/*.js")
         .pipe(uglify())
-        .pipe(gulp.dest("public/js/"));
+        .pipe(gulp.dest("public/js/common"));
+});
+gulp.task("js", function () {
+    gulp.src("resources/js/admin/*.js")
+        .pipe(uglify())
+        .pipe(gulp.dest("public/js/admin"));
+    return gulp.src("resources/js/module/*.js")
+        .pipe(uglify())
+        .pipe(gulp.dest("public/js/module"));
 });
