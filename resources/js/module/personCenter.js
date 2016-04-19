@@ -102,7 +102,12 @@ define(['util','tplM'], function (util,tplM) {
 
     $.get('/models/userfind',function(e){
         console.log(e);
-        var dest = $.tpl('tpl', {model:e});
-        $('.user-model-list').html(dest);
+        if(e){
+            var dest = $.tpl('tpl', {model:e});
+            $('.user-model-list').html(dest);
+        }else{
+            $('.user-model-list').html('您还没上传作品');
+        }
+
     });
 });

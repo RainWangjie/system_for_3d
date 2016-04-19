@@ -21,10 +21,10 @@ define(['util'], function (util) {
         isMtl = true,
         isImg = true;
     $.get('/qiniu/token', function (e) {
-        util.initQiniu(e, 'btn_add_preview', '模型预览图', 'jpg,png', previewAdded, previewUploaded, progress);
+        util.initQiniu(e, 'btn_add_preview', '模型预览图', 'jpg,png,gif,jpeg', previewAdded, previewUploaded, progress);
         util.initQiniu(e, 'btn_add_obj', '模型obj文件', 'obj', objAdded, objUploaded, progress);
         util.initQiniu(e, 'btn_add_mtl', '模型mtl文件', 'mtl', mtlAdded, mtlUploaded, progress);
-        util.initQiniu(e, 'btn_add_img', '模型贴图文件', 'jpg,png', imgAdded, imgUploaded, progress);
+        util.initQiniu(e, 'btn_add_img', '模型贴图文件', 'jpg,png,tga,jpeg', imgAdded, imgUploaded, progress);
 
     });
     $('#upload-model').on('click', function () {
@@ -95,7 +95,7 @@ define(['util'], function (util) {
 
     function objUploaded(up, file, info) {
         var res = JSON.parse(info);
-        model.objUrl = 'http://7xs7nv.com1.z0.glb.clouddn.com/' + res.key;
+        model.objUrl = res.key;
         model.objName = file.name;
         $('#progress').html(file.name + '上传成功！');
         $('#obj-text').html(file.name);
@@ -114,7 +114,7 @@ define(['util'], function (util) {
 
     function mtlUploaded(up, file, info) {
         var res = JSON.parse(info);
-        model.mtlUrl = 'http://7xs7nv.com1.z0.glb.clouddn.com/' + res.key;
+        model.mtlUrl = res.key;
         model.mtlName = file.name;
         $('#progress').html(file.name + '上传成功！');
         $('#mtl-text').html(file.name);
