@@ -1,7 +1,7 @@
 /**
  * Created by gewangjie on 16/4/5.
  */
-define(['util','tplM'], function (util,tplM) {
+define(['util', 'tplM'], function (util) {
     var user_data = user,
         isAvatar = true;
     $('#user_sex').val(user_data.sex);
@@ -16,7 +16,7 @@ define(['util','tplM'], function (util,tplM) {
             util.shake('#user_mobile');
             return;
         }
-        user_data.name = user_data.name;
+        user_data.name = name;
         user_data.mobile = mobile;
         user_data.sex = $('#user_sex').val();
         user_data.birthday = $('#user_birthday').val();
@@ -100,12 +100,12 @@ define(['util','tplM'], function (util,tplM) {
         console.log(res);
     }
 
-    $.get('/models/userfind',function(e){
+    $.get('/models/userfind', function (e) {
         console.log(e);
-        if(e){
-            var dest = $.tpl('tpl', {model:e});
+        if (e.length !== 0) {
+            var dest = $.tpl('tpl', {model: e});
             $('.user-model-list').html(dest);
-        }else{
+        } else {
             $('.user-model-list').html('您还没上传作品');
         }
 

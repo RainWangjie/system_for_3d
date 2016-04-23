@@ -2,19 +2,21 @@
  * Created by gewangjie on 16/3/30.
  */
 var express = require('express');
+var isLogin = require('../routes/isLogin');
 var router = express.Router();
 
+var UserEntity = require('../models/User').UserEntity;
 var StyleEntity = require('../models/Style').StyleEntity;
 var ModelEntity = require('../models/Model').ModelEntity;
 var localFileEntity = require('../models/localFile').localFileEntity;
 
-router.get('/', function (req, res, next) {
+router.get('/', isLogin.admin, function (req, res, next) {
     console.log('后台管理');
     res.render('admin/index', {title: '后台管理', user_name: req.session.user_name, user_avatar: req.session.user_avatar});
 });
 
 //类型管理页面
-router.get('/style', function (req, res, next) {
+router.get('/style', isLogin.admin, function (req, res, next) {
     console.log('后台管理-类型管理');
     StyleEntity.find(function (err, style) {
         var restResult = '';
@@ -93,7 +95,7 @@ router.post('/deleteStyle', function (req, res, next) {
 
 });
 //模型审核页面
-router.get('/audit', function (req, res, next) {
+router.get('/audit', isLogin.admin, function (req, res, next) {
     console.log('后台管理-模型审核');
     ModelEntity.find({isPass: false}, function (err, model) {
         var restResult = '';
@@ -115,7 +117,7 @@ router.get('/audit', function (req, res, next) {
     });
 });
 //模型审核预览页面
-router.get('/webPreview/:modelid', function (req, res, next) {
+router.get('/webPreview/:modelid', isLogin.admin, function (req, res, next) {
     ModelEntity.findOne({_id: req.params.modelid}, function (err, model) {
         var restResult = '';
         if (err) {//查询异常
@@ -125,11 +127,17 @@ router.get('/webPreview/:modelid', function (req, res, next) {
             return;
         }
         if (model) {//model存在
-            res.render('webPreview', {
-                title: model.name,
-                model: model,
-                user_name: req.session.user_name,
-                user_avatar: req.session.user_avatar
+            UserEntity.findOne({_id: model.userId}, function (err, user) {
+                res.render('webPreview', {
+                    title: model.name,
+                    model: model,
+                    model_user_name: user.name,
+                    model_user_avatar: user.avatar,
+                    model_user_sex: user.sex,
+                    user_name: req.session.user_name,
+                    user_avatar: req.session.user_avatar,
+                    is_model_option:true
+                });
             });
         }
     });

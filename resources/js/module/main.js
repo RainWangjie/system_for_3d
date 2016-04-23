@@ -53,6 +53,8 @@ var routes = [
     {url: '/index', module: 'module/index'},
     {url: '/users/login', module: 'module/users'},
     {url: '/users/message', module: 'module/personCenter'},
+    {url: '/users/webPreview', module: 'module/webPreview'},
+    {url: '/models/list', module: 'module/modelList'},
     {url: '/models/upload', module: 'module/uploadModels'},
     {url: '/models/web', module: 'module/webPreview'},
     //管理员
