@@ -12,8 +12,8 @@ define(['util'], function (util) {
         objName: '',
         mtlUrl: '',
         mtlName: '',
-        imgUrl: '',
-        imgName: ''
+        imgUrl: [],
+        imgName: []
     };
     var progress = $('#progress'),
         isPreview = true,
@@ -53,8 +53,8 @@ define(['util'], function (util) {
                 util.shake('#btn_add_img');
                 return;
             }
-            model.imgUrl = model.imgUrl.substring(0, model.imgUrl.length - 1);
-            model.imgName = model.imgName.substring(0, model.imgName.length - 1)
+            model.imgUrl = JSON.stringify(model.imgUrl);
+            model.imgName = JSON.stringify(model.imgName);
 
             $.post('/models/upload', model, function (e) {
                 alert(e);
@@ -136,10 +136,8 @@ define(['util'], function (util) {
 
     function imgUploaded(up, file, info) {
         var res = JSON.parse(info);
-        model.imgUrl += res.key;
-        model.imgUrl += ',';
-        model.imgName += file.name;
-        model.imgName += ',';
+        model.imgUrl.push(res.key);
+        model.imgName.push(file.name);
         $('#progress').html(file.name + '上传成功！');
         isImg = true;
     }
