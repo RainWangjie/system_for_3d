@@ -8,17 +8,20 @@ define([], function () {
     var scene = new THREE.Scene();
     var clock = new THREE.Clock();
     var stat = null;
+    var model = '';
+
     function init() {
         stat = new Stats();
         stat.domElement.style.position = 'absolute';
         stat.domElement.style.top = 'auto';
         document.body.appendChild(stat.domElement);
     }
-    init();
-    //obj+mtl
-    var axisHelper = new THREE.AxisHelper(100);
-    scene.add( axisHelper );
 
+    init();
+    //坐标系
+    var axisHelper = new THREE.AxisHelper(100);
+    scene.add(axisHelper);
+    //obj+mtl
     THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader);
     var mtlLorder = new THREE.MTLLoader();
     mtlLorder.setBaseUrl('http://7xs7nv.com1.z0.glb.clouddn.com/');
@@ -30,12 +33,15 @@ define([], function () {
         objLoader.setMaterials(materials);
         objLoader.setPath('http://7xs7nv.com1.z0.glb.clouddn.com/');
         objLoader.load(objUrl, function (obj_model) {
-            obj_model.scale.set(model_option[0],model_option[0],model_option[0]);
+            model = obj_model;
+            model.scale.set(model_option[0], model_option[0], model_option[0]);
             //obj_model.position.y = -50;
-            obj_model.rotation.x = model_option[1]/180 * Math.PI;
-            obj_model.rotation.y = model_option[2]/180 * Math.PI;
-            obj_model.rotation.z = model_option[3]/180 * Math.PI;
-            scene.add(obj_model);
+            model.rotation.x = model_option[1] / 180 * Math.PI;
+            model.rotation.y = model_option[2] / 180 * Math.PI;
+            model.rotation.z = model_option[3] / 180 * Math.PI;
+            scene.add(model);
+            $('.canvas-model-preview .preview-img').remove();
+            $('.canvas-model-preview .progress').remove();
         }, onProgress, onError);
     });
 
@@ -62,7 +68,7 @@ define([], function () {
     var renderer = new THREE.WebGLRenderer({antialiasing: true});
     renderer.setSize(scene_width, scene_height);
 
-    $('.canvas-model-preview').html(renderer.domElement);
+    $('.canvas-model-preview').append(renderer.domElement);
 
     var controls = new THREE.OrbitControls(camera);
     controls.addEventListener('change', render);
@@ -85,9 +91,14 @@ define([], function () {
     var onProgress = function (xhr) {
         if (xhr.lengthComputable) {
             var percentComplete = xhr.loaded / xhr.total * 100;
+            $('.progress-bar').css('witdh', Math.round(percentComplete, 2) + '%');
             console.log(Math.round(percentComplete, 2) + '% downloaded');
         }
     };
     var onError = function (xhr) {
     };
+
+
+    //模型配置
+    $()
 });

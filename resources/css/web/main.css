@@ -1,16 +1,13 @@
 .panel_popup {
   width: 400px;
-  height: 300px;
   position: fixed;
-  top: 50%;
+  top: 20%;
   left: 50%;
   margin-left: -200px;
-  margin-top: -150px;
   transition: all .3s;
   transform: translate(-300%, 0);
-  background: #f1f1f1;
-  border-radius: 5px;
-  text-align: center; }
+  text-align: center;
+  z-index: 999; }
 
 .panel_popup.show {
   transform: translate(0, 0); }
@@ -68,3 +65,25 @@ textarea {
 
 .audit-message div {
   text-align: center; }
+
+.user-model-list .panel, .style-model-list .panel {
+  padding: 15px;
+  border-radius: 2px;
+  border: 0;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12); }
+
+.canvas-model-preview {
+  position: relative; }
+
+.canvas-model-preview .preview-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 998; }
+
+.canvas-model-preview .progress {
+  position: absolute;
+  left: 5%;
+  bottom: 0;
+  width: 90%;
+  z-index: 999; }

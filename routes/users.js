@@ -4,11 +4,12 @@ var router = express.Router();
 var isLogin = require('../routes/isLogin');
 
 var UserEntity = require('../models/User').UserEntity;
+var ModelEntity = require('../models/Model').ModelEntity;
 
 /* GET user page. */
 router.get('/login', function (req, res, next) {
     console.log('注册登录页');
-    res.render('users', {title: '注册登录页',user_name:req.session.user_name,user_avatar:req.session.user_avatar});
+    res.render('users', {title: '注册登录页', user_name: req.session.user_name, user_avatar: req.session.user_avatar});
 });
 /*个人信息页*/
 router.get('/message', isLogin.authorize, function (req, res, next) {
@@ -28,7 +29,12 @@ router.get('/message', isLogin.authorize, function (req, res, next) {
         }
 
         if (user) {//手机号已注册
-            res.render('personCenter', {title: '个人信息', user: user,user_name:req.session.user_name,user_avatar:req.session.user_avatar});
+            res.render('personCenter', {
+                title: '个人信息',
+                user: user,
+                user_name: req.session.user_name,
+                user_avatar: req.session.user_avatar
+            });
         }
     });
 });
@@ -186,6 +192,37 @@ router.post('/resetPassword', isLogin.authorize, function (req, res, next) {
             } else {
                 restResult = '两次密码不一致';
                 res.status(501).send(restResult);
+            }
+        }
+    });
+});
+//个人模型预览页
+router.get('/webPreview/:modelid', isLogin.authorize, function (req, res, next) {
+    ModelEntity.findOne({_id: req.params.modelid}, function (err, model) {
+        var restResult = '';
+        if (err) {//查询异常
+            restResult = "服务器异常";
+            console.log(err);
+            res.send(restResult);
+            return;
+        }
+        if (model) {//model存在
+            if (model.userId == req.session.user_id) {
+                UserEntity.findOne({_id: model.userId}, function (err, user) {
+                    res.render('webPreview', {
+                        title: model.name,
+                        model: model,
+                        model_user_name: user.name,
+                        model_user_avatar: user.avatar,
+                        model_user_sex: user.sex,
+                        user_name: req.session.user_name,
+                        user_avatar: req.session.user_avatar,
+                        is_model_option: true
+                    });
+                });
+            } else {
+                console.log('查看模型user不匹配重定向首页!');
+                res.redirect('/index');
             }
         }
     });
