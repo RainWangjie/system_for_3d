@@ -70,7 +70,7 @@ define([], function () {
 
     $('.canvas-model-preview').append(renderer.domElement);
 
-    var controls = new THREE.OrbitControls(camera);
+    var controls = new THREE.OrbitControls(camera,document.querySelector('.canvas-model-preview'));
     controls.addEventListener('change', render);
 
     function render() {
@@ -91,7 +91,7 @@ define([], function () {
     var onProgress = function (xhr) {
         if (xhr.lengthComputable) {
             var percentComplete = xhr.loaded / xhr.total * 100;
-            $('.progress-bar').css('witdh', Math.round(percentComplete, 2) + '%');
+            $('.progress-bar').css('width', Math.round(percentComplete, 2) + '%');
             console.log(Math.round(percentComplete, 2) + '% downloaded');
         }
     };
@@ -100,5 +100,32 @@ define([], function () {
 
 
     //模型配置
-    $()
+    $('.model_option_1').val(model_option[0]);
+    $('.model_option_2').val(model_option[1]);
+    $('.model_option_3').val(model_option[2]);
+    $('.model_option_4').val(model_option[3]);
+    var model_option_new = model_option;
+    $('.panel-body input').on('change',function(){
+       console.log('模型配置');
+        model_option_new[0] = $('.model_option_1').val();
+        model_option_new[1] = $('.model_option_2').val();
+        model_option_new[2] = $('.model_option_3').val();
+        model_option_new[3] = $('.model_option_4').val();
+        model.scale.set(model_option_new[0], model_option_new[0], model_option_new[0]);
+        //obj_model.position.y = -50;
+        model.rotation.x = model_option_new[1] / 180 * Math.PI;
+        model.rotation.y = model_option_new[2] / 180 * Math.PI;
+        model.rotation.z = model_option_new[3] / 180 * Math.PI;
+    });
+    $('#update_model_option').on('click',function(){
+        if(confirm('确认更新配置')){
+            var data = {
+                model_id:model_id,
+                model_option:JSON.stringify(model_option_new)
+            };
+            $.post('/models/web/update_model_option',data,function(e){
+               alert(e);
+            });
+        }
+    });
 });

@@ -34,6 +34,9 @@ router.get('/upload', isLogin.authorize, function (req, res, next) {
 });
 //上传接口
 router.post('/upload', isLogin.authorize, function (req, res, next) {
+    var imgUrlList = JSON.parse(req.body.imgUrl);
+    var imgNameList = JSON.parse(req.body.imgName);
+
     var newModel = new ModelEntity({
         name: req.body.modelName,//模型名
         descriptions: req.body.descriptions,//描述
@@ -41,13 +44,10 @@ router.post('/upload', isLogin.authorize, function (req, res, next) {
         typeId: req.body.typeId,//分类ID
         previewImg: req.body.previewImg,//模型预览图
         objUrl: req.body.objUrl,//obj文件七牛链接
-        mtlUrl: req.body.mtlUrl//mtl文件七牛链接
+        mtlUrl: req.body.mtlUrl,//mtl文件七牛链接
+        imgUrl:imgUrlList//贴图文件七牛链接
     });
-    var imgUrlList = req.body.imgUrl.split(',');
-    var imgNameList = req.body.imgName.split(',');
-    for (var i in imgUrlList) {
-        newModel.imgUrl.push(imgUrlList[i]);
-    }
+
     newModel.save(function (err, model) {
         var restResult = '';
         if (err) {//服务器保存异常
@@ -228,6 +228,21 @@ router.get('/web/:modelid', function (req, res, next) {
                 });
             });
 
+        }
+    });
+});
+//web端model_option更新
+router.post('/web/update_model_option',function(req,res,next){
+    console.log(JSON.parse(req.body.model_option));
+
+    ModelEntity.update({'_id': req.body.model_id}, {modelOption:JSON.parse(req.body.model_option)}, function (err, model) {
+        var restResult = '';
+        if (err) {
+            restResult = "服务器异常";
+            res.status(500).send(restResult);
+            return;
+        } else {
+            res.send('更新成功');
         }
     });
 });

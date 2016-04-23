@@ -28,6 +28,27 @@
                             <input class="form-control model_option_1" type="number">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-2">rotation_x:</label>
+                        <div class="col-md-10">
+                            <input class="form-control model_option_2" type="number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2">rotation_z:</label>
+                        <div class="col-md-10">
+                            <input class="form-control model_option_3" type="number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2">rotation_z:</label>
+                        <div class="col-md-10">
+                            <input class="form-control model_option_4" type="number">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-sm btn-success" id="update_model_option">更新配置</button>
                 </div>
         </div>
     </div>
@@ -35,7 +56,8 @@
 {{/if}}
 
 <script>
-    var objUrl = '{{model.objUrl}}',
+    var model_id = '{{model._id}}',
+            objUrl = '{{model.objUrl}}',
             mtlUrl = '{{model.mtlUrl}}',
             model_option = [{{model.modelOption}}];
 </script>
