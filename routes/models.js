@@ -4,7 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var isLogin = require('../routes/isLogin');
-var qiniu_mySelf = require('../routes/qiniu');
+//var qiniu_mySelf = require('../routes/qiniu');
 var http = require('http');
 var fs = require('fs');
 var qiniu = require("qiniu");
@@ -45,7 +45,7 @@ router.post('/upload', isLogin.authorize, function (req, res, next) {
         previewImg: req.body.previewImg,//模型预览图
         objUrl: req.body.objUrl,//obj文件七牛链接
         mtlUrl: req.body.mtlUrl,//mtl文件七牛链接
-        imgUrl:imgUrlList//贴图文件七牛链接
+        imgUrl: imgUrlList//贴图文件七牛链接
     });
 
     newModel.save(function (err, model) {
@@ -179,7 +179,11 @@ router.get('/userfind', function (req, res, next) {
 });
 //分类模型页面
 router.get('/list', function (req, res, next) {
-    res.render('modelList', {title: '模型列表', user_name: req.session.user_name, user_avatar: req.session.user_avatar});
+    res.render('modelList', {
+        title: '模型列表',
+        user_name: req.session.user_name,
+        user_avatar: req.session.user_avatar
+    });
 });
 //分类模型接口
 router.get('/list/style/:modelstyle', function (req, res, next) {
@@ -232,10 +236,10 @@ router.get('/web/:modelid', function (req, res, next) {
     });
 });
 //web端model_option更新
-router.post('/web/update_model_option',function(req,res,next){
+router.post('/web/update_model_option', function (req, res, next) {
     console.log(JSON.parse(req.body.model_option));
 
-    ModelEntity.update({'_id': req.body.model_id}, {modelOption:JSON.parse(req.body.model_option)}, function (err, model) {
+    ModelEntity.update({'_id': req.body.model_id}, {modelOption: JSON.parse(req.body.model_option)}, function (err, model) {
         var restResult = '';
         if (err) {
             restResult = "服务器异常";
@@ -243,36 +247,6 @@ router.post('/web/update_model_option',function(req,res,next){
             return;
         } else {
             res.send('更新成功');
-        }
-    });
-});
-//h5端指定模型预览
-router.get('/h5/:modelid', function (req, res, next) {
-    ModelEntity.findOne({_id: req.params.modelid}, function (err, model) {
-        var restResult = '';
-        if (err) {//查询异常
-            restResult = "服务器异常";
-            console.log(err);
-            res.send(restResult);
-            return;
-        }
-        if (model) {//model存在
-            if (model.userId == req.session.user_id) {
-                UserEntity.findOne({_id: model.userId}, function (err, user) {
-                    res.render('webPreview', {
-                        title: model.name,
-                        model: model,
-                        model_user_name: user.name,
-                        model_user_avatar: user.avatar,
-                        model_user_sex: user.sex,
-                        user_name: req.session.user_name,
-                        user_avatar: req.session.user_avatar
-                    });
-                });
-            } else {
-                console.log('查看模型user不匹配重定向首页!');
-                res.redirect('/index');
-            }
         }
     });
 });

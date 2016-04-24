@@ -15,7 +15,7 @@ var ModelScheme = new base.Schema({
     objUrl: String,//obj文件七牛链接
     mtlUrl: String,//mtl文件七牛链接
     imgUrl: Array,//贴图文件七牛链接
-    modelOption: {type: Array, default: [1, 0, 0, 0]}//model基本配置属性，作为保留参数
+    modelOption: {type: Array, default: [1, 0, 45, 0]}//model基本配置属性，作为保留参数
 });
 
 var ModelEntity = base.mongoose.model('ModelEntity', ModelScheme, 'model');//指定在数据库中的collection名称为style

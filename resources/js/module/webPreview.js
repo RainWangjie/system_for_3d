@@ -53,11 +53,20 @@ define([], function () {
     var directionalLight = new THREE.DirectionalLight(0xffeedd);
     directionalLight.position.set(0, 0, 1).normalize();
     scene.add(directionalLight);
+    //3个聚光灯
+    var spotLight_1 = new THREE.SpotLight(0xffffff);
+    spotLight_1.position.set(-353,-353,500);
+    spotLight_1.castShadow = true;
+    scene.add(spotLight_1);
+    var spotLight_2 = new THREE.SpotLight(0xffffff);
+    spotLight_2.position.set(-130,483,300);
+    spotLight_2.castShadow = true;
+    scene.add(spotLight_2);
+    var spotLight_3 = new THREE.SpotLight(0xffffff);
+    spotLight_3.position.set(483,-130,300);
+    spotLight_3.castShadow = true;
+    scene.add(spotLight_3);
 
-    var spotLight = new THREE.SpotLight(0xffffff);
-    spotLight.position.z = 70;
-    spotLight.castShadow = true;
-    scene.add(spotLight);
 
     scene.add(new THREE.AmbientLight(0x101030));
 

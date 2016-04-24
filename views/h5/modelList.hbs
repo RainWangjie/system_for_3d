@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{title}}</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .panel{
+            position: absolute;
+            width:100%;
+            top:0;
+            left: 0;
+            transition: all .3s;
+            transform: translate(-100%,0);
+        }
+        .panel.show{
+            transform: translate(0,0);
+        }
+        .choosePanel{
+            position: absolute;
+            list-style-type: none;
+            top:10px;
+            left: 0;
+            padding: 0;
+            margin: 20px;
+            z-index: 9999;
+        }
+        .choosePanel li{
+            width: 25px;
+            height: 2px;
+            background: #b0b0b0;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+<ul class="choosePanel">
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<div class="panel">
+
+</div>
+<script data-main="/js/module/h5/main" src="/js/common/require.min.js"></script>
+</body>
+</html>

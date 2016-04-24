@@ -30,6 +30,9 @@ gulp.task("commonJS", function () {
         .pipe(gulp.dest("public/js/common"));
 });
 gulp.task("js", function () {
+    gulp.src("resources/js/module/h5/*.js")
+        .pipe(uglify())
+        .pipe(gulp.dest("public/js/module/h5"));
     gulp.src("resources/js/admin/*.js")
         .pipe(uglify())
         .pipe(gulp.dest("public/js/admin"));
