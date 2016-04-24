@@ -5,6 +5,7 @@ require.config({
     baseUrl: '/js/',
     paths: {
         zepto:'common/zepto',
+        tplM: 'common/tpl',
         three: 'common/three.min',
         stat: 'common/stat.min',
         DDSLoader: 'common/DDSLoader',
@@ -14,12 +15,33 @@ require.config({
         OrbitControls: 'common/OrbitControls',
     },
     shim: {
-
+        'tplM':{
+            deps:['zepto']
+        },
+        'OBJMTLLoader': {
+            deps: ['OBJLoader', 'MTLLoader', 'DDSLoader']
+        },
+        'OBJLoader': {
+            deps: ['three']
+        },
+        'MTLLoader': {
+            deps: ['three']
+        },
+        'DDSLoader': {
+            deps: ['three']
+        },
+        'OrbitControls': {
+            deps: ['three']
+        },
+        'module/h5/webPreview': {
+            deps: ['OrbitControls', 'OBJMTLLoader', 'stat']
+        }
     }
 });
 
 var routes = [
-    {url: '/h5/list', module: 'module/h5/modelList'}
+    {url: '/h5/list', module: 'module/h5/modelList'},
+    {url: '/h5/models', module: 'module/h5/webPreview'}
 ];
 
 var href = location.pathname;

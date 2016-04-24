@@ -2,37 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport"
+          content="user-scalable=0,width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title>{{title}}</title>
     <style>
-        body{
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
             margin: 0;
         }
-        .panel{
+
+        .panel {
             position: absolute;
-            width:100%;
-            top:0;
+            width: 100%;
+            top: 0;
             left: 0;
             transition: all .3s;
-            transform: translate(-100%,0);
+            transform: translate(-100%, 0);
         }
-        .panel.show{
-            transform: translate(0,0);
+
+        .panel.show {
+            transform: translate(0, 0);
         }
-        .choosePanel{
+
+        .choosePanel {
             position: absolute;
             list-style-type: none;
-            top:10px;
+            top: 10px;
             left: 0;
             padding: 0;
             margin: 20px;
             z-index: 9999;
         }
-        .choosePanel li{
-            width: 25px;
+
+        .choosePanel li {
+            width: 30px;
             height: 2px;
             background: #b0b0b0;
-            margin-bottom: 6px;
+            margin-bottom: 7px;
+        }
+
+        .panel-style {
+            box-sizing: border-box;
+            margin-left: -40%;
+            padding-left: 40%;
+            padding-top: 40px;
+            background: #61b0ba;
+            height: 100%;
+            z-index: 999;
+        }
+
+        .panel-style ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .panel-style li {
+            text-align: center;
+            padding: 10px;
+            border-bottom: 1px solid #323232;
+        }
+
+        .panel-item {
+            box-sizing: border-box;
+            width: 50%;
+            padding: 5px;
+            float: left;
+            border-radius: 2px;
+            border: 0;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 1px 3px 0 rgba(0, 0, 0, .12);
+        }
+
+        .panel-item .img {
+            position: relative;
+        }
+
+        .panel-item .img:after {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+
+        .img div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .img img {
+            zoom: .5;
+        }
+        .panel-item .name{
+            height: 30px;
+            font-size: 14px;
+            text-align: center;
         }
     </style>
 </head>
@@ -42,9 +112,31 @@
     <li></li>
     <li></li>
 </ul>
-<div class="panel">
-
+<div class="panel panel-style show">
+    <ul>
+        <li data-style="1">人物</li>
+        <li data-style="2">建筑</li>
+        <li data-style="3">服饰</li>
+        <li data-style="4">数码</li>
+        <li data-style="5">几何</li>
+    </ul>
 </div>
+
 <script data-main="/js/module/h5/main" src="/js/common/require.min.js"></script>
+<script type="text/html" id="model-list">
+    <%for(var i in list){
+    var item = list[i];%>
+    <div class="panel-item">
+        <div class="img" data-id="<%=item.id%>">
+            <div>
+                <img src="<%=item.previewImg%>?imageView/0/w/<%=width%>/h/<%=width%>" width="100%">
+            </div>
+        </div>
+        <div class="name">
+            <%=item.name%>
+        </div>
+    </div>
+    <%}%>
+</script>
 </body>
 </html>

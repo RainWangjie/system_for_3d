@@ -22,6 +22,9 @@ require.config({
         'bootstrap': {
             deps: ['jquery']
         },
+        'tplM':{
+          deps:['jquery']
+        },
         'module/personCenter': {
             deps: ['plupload', 'qiniu']
         },

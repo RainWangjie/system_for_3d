@@ -1,7 +1,7 @@
 /**
  * Created by gewangjie on 16/4/13.
  */
-define(['jquery'],function ($) {
+define([],function () {
     $.tpl = function (id, data, env) {
         // 判断str参数，如str为script标签的id，则取该标签的innerHTML，再递归调用自身
         // 如str为HTML文本，则分析文本并构造渲染函数
