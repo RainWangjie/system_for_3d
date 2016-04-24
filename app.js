@@ -13,6 +13,7 @@ var users = require('./routes/users');
 var models = require('./routes/models');
 var admin = require('./routes/admin');
 var qiniu = require('./routes/qiniu');
+var h5 = require('./routes/h5');
 
 
 var app = express();
@@ -42,13 +43,6 @@ app.use(session({
 //静态文件资源存放
 app.use(express.static(path.join(__dirname, 'public')));
 
-//routes客户端中间件
-//app.get('/',function(req,res){
-//    console.log('重定向到首页');
-//    res.redirect('/index');
-//});
-//sh
-//
 
 //首页重定向到/index
 app.get('/',function(req,res){
@@ -59,6 +53,7 @@ app.get('/',function(req,res){
 app.use('/index', routes);
 app.use('/users', users);
 app.use('/models', models);
+app.use('/h5',h5);
 //routes后台中间件
 app.use('/admin', admin);
 //获取qiniu的token
