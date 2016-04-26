@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}--VR</title>
+    <meta name="viewport"
+          content="user-scalable=0,width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="canvas-model-preview">
+    <img class="preview-img" src="{{model.previewImg}}" width="100%">
+</div>
+<script data-main="/js/module/h5/main" src="/js/common/require.min.js"></script>
+<script>
+    var model_id = '{{model._id}}',
+            objUrl = '{{model.objUrl}}',
+            mtlUrl = '{{model.mtlUrl}}',
+            model_option = [{{model.modelOption}}];
+</script>
+</body>
+</html>

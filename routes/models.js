@@ -237,8 +237,6 @@ router.get('/web/:modelid', function (req, res, next) {
 });
 //web端model_option更新
 router.post('/web/update_model_option', function (req, res, next) {
-    console.log(JSON.parse(req.body.model_option));
-
     ModelEntity.update({'_id': req.body.model_id}, {modelOption: JSON.parse(req.body.model_option)}, function (err, model) {
         var restResult = '';
         if (err) {

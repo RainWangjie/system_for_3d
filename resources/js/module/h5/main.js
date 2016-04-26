@@ -41,7 +41,8 @@ require.config({
 
 var routes = [
     {url: '/h5/list', module: 'module/h5/modelList'},
-    {url: '/h5/models', module: 'module/h5/webPreview'}
+    {url: '/h5/models/preview', module: 'module/h5/webPreview'},
+    {url: '/h5/models/vr', module: 'module/h5/vr'}
 ];
 
 var href = location.pathname;

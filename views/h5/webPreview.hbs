@@ -2,18 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>加载obj模型</title>
+    <title>{{title}}</title>
     <meta name="viewport"
           content="user-scalable=0,width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1">
     <style>
-        body{
+        body {
             margin: 0;
         }
-        .canvas-model-preview{
+
+        .canvas-model-preview {
             background: #000;
         }
-        .model-message{
+
+        .model-message {
+            padding: 10px;
             font-size: 14px;
+        }
+
+        .model-user {
+            display: flex;
+        }
+        .model-description,.model-created-at,.model-user{
+            margin-bottom: 10px;
+        }
+        .model-user-avatar {
+            width: 40px;
+            height: 40px;
+            border: 0;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .model-user-name {
+            flex: 1;
+            line-height: 20px;
+            padding: 0 5px;
+        }
+        .model-vr{
+            width: 30px;
         }
     </style>
 </head>
@@ -22,12 +48,26 @@
     <img class="preview-img" src="{{model.previewImg}}" width="100%">
 </div>
 <div class="model-message">
-    <img src="{{model_user_avatar}}" width="40px"><br>
-    作者：{{model_user_name}}<br>
-    作品名：{{model.name}}<br>
-    描述：{{model.descriptions}}<br>
-    分类：{{model.typeId}}<br>
-    上传时间：{{model.createTime}}
+    <div class="model-user">
+        <div class="model-user-avatar">
+            <img src="{{model_user_avatar}}" width="100%">
+        </div>
+        <div class="model-user-name">
+            作者：{{model_user_name}}<br>
+            作品名：{{model.name}}<br>
+        </div>
+        <div class="model-vr">
+            <a href="/h5/models/vr/{{model._id}}">
+                <img src="/images/vr.png" width="100%">
+            </a>
+        </div>
+    </div>
+    <div class="model-description">
+        {{model.descriptions}}<br>
+    </div>
+    <div class="model-created-at">
+        上传时间：{{created_at}}
+    </div>
 </div>
 <script data-main="/js/module/h5/main" src="/js/common/require.min.js"></script>
 <script>
