@@ -12,7 +12,7 @@ define(['tplM'], function () {
     });
     $('body').on('tap', '.img', function () {
         var id = $(this).data('id');
-        location.href = '/h5/models/' + id;
+        location.href = '/h5/models/preview/' + id;
         return false;
     });
     var width = $(window).width() / 2 - 10;

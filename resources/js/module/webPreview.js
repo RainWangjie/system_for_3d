@@ -39,6 +39,7 @@ define([], function () {
             model.rotation.x = model_option[1] / 180 * Math.PI;
             model.rotation.y = model_option[2] / 180 * Math.PI;
             model.rotation.z = model_option[3] / 180 * Math.PI;
+            model.position.set(model_option[4] || 0, model_option[5] || 0, model_option[6] || 0);
             scene.add(model);
             $('.canvas-model-preview .preview-img').remove();
             $('.canvas-model-preview .progress').remove();
@@ -55,15 +56,15 @@ define([], function () {
     scene.add(directionalLight);
     //3个聚光灯
     var spotLight_1 = new THREE.SpotLight(0xffffff);
-    spotLight_1.position.set(-353,-353,500);
+    spotLight_1.position.set(-353, -353, 500);
     spotLight_1.castShadow = true;
     scene.add(spotLight_1);
     var spotLight_2 = new THREE.SpotLight(0xffffff);
-    spotLight_2.position.set(-130,483,300);
+    spotLight_2.position.set(-130, 483, 300);
     spotLight_2.castShadow = true;
     scene.add(spotLight_2);
     var spotLight_3 = new THREE.SpotLight(0xffffff);
-    spotLight_3.position.set(483,-130,300);
+    spotLight_3.position.set(483, -130, 300);
     spotLight_3.castShadow = true;
     scene.add(spotLight_3);
 
@@ -79,7 +80,7 @@ define([], function () {
 
     $('.canvas-model-preview').append(renderer.domElement);
 
-    var controls = new THREE.OrbitControls(camera,document.querySelector('.canvas-model-preview'));
+    var controls = new THREE.OrbitControls(camera, document.querySelector('.canvas-model-preview'));
     controls.addEventListener('change', render);
 
     function render() {
@@ -109,31 +110,31 @@ define([], function () {
 
 
     //模型配置
-    $('.model_option_1').val(model_option[0]);
-    $('.model_option_2').val(model_option[1]);
-    $('.model_option_3').val(model_option[2]);
-    $('.model_option_4').val(model_option[3]);
     var model_option_new = model_option;
-    $('.panel-body input').on('change',function(){
-       console.log('模型配置');
-        model_option_new[0] = $('.model_option_1').val();
-        model_option_new[1] = $('.model_option_2').val();
-        model_option_new[2] = $('.model_option_3').val();
-        model_option_new[3] = $('.model_option_4').val();
+    for (var i in model_option_new) {
+        $('.model_option_' + i).val(model_option_new[i] || 0);
+    }
+    $('.panel-body input').on('change', function () {
+        console.log('模型配置');
+        for (var i in model_option_new) {
+            model_option_new[i] = $('.model_option_' + i).val();
+        }
         model.scale.set(model_option_new[0], model_option_new[0], model_option_new[0]);
         //obj_model.position.y = -50;
         model.rotation.x = model_option_new[1] / 180 * Math.PI;
         model.rotation.y = model_option_new[2] / 180 * Math.PI;
         model.rotation.z = model_option_new[3] / 180 * Math.PI;
+        model.position.set(model_option_new[4], model_option_new[5], model_option_new[6]);
+
     });
-    $('#update_model_option').on('click',function(){
-        if(confirm('确认更新配置')){
+    $('#update_model_option').on('click', function () {
+        if (confirm('确认更新配置')) {
             var data = {
-                model_id:model_id,
-                model_option:JSON.stringify(model_option_new)
+                model_id: model_id,
+                model_option: JSON.stringify(model_option_new)
             };
-            $.post('/models/web/update_model_option',data,function(e){
-               alert(e);
+            $.post('/models/web/update_model_option', data, function (e) {
+                alert(e);
             });
         }
     });
