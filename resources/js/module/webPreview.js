@@ -1,10 +1,13 @@
 /**
  * Created by gewangjie on 16/4/13.
  */
-define([], function () {
+define(['fullscreen'], function (fullscreen) {
     console.log('PC端模型预览改版!!!');
+    var screen_width = window.outerWidth,
+        screen_height = window.outerHeight,
+        screeb_b = screen_width / screen_height;
     var scene_width = $('.col-md-9').width(),
-        scene_height = scene_width / 1.5;
+        scene_height = scene_width / screeb_b;
     var scene = new THREE.Scene();
     var clock = new THREE.Clock();
     var stat = null;
@@ -14,13 +17,16 @@ define([], function () {
         stat = new Stats();
         stat.domElement.style.position = 'absolute';
         stat.domElement.style.top = 'auto';
-        document.body.appendChild(stat.domElement);
+        document.getElementsByClassName('canvas')[0].appendChild(stat.domElement);
     }
 
     init();
     //坐标系
-    var axisHelper = new THREE.AxisHelper(100);
-    scene.add(axisHelper);
+    console.log('是否支持配置:',is_model_option);
+    if(is_model_option){
+        var axisHelper = new THREE.AxisHelper(100);
+        scene.add(axisHelper);
+    }
     //obj+mtl
     THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader);
     var mtlLorder = new THREE.MTLLoader();
@@ -71,16 +77,16 @@ define([], function () {
 
     scene.add(new THREE.AmbientLight(0x101030));
 
-    var camera = new THREE.PerspectiveCamera(45, scene_width / scene_height, .1, 1000);
+    var camera = new THREE.PerspectiveCamera(45, screeb_b, .1, 1000);
     camera.position.set(200, 200, 200);
     camera.lookAt(scene.position);
 
     var renderer = new THREE.WebGLRenderer({antialiasing: true});
     renderer.setSize(scene_width, scene_height);
+    renderer.domElement.id = 'canvas-model-preview';
+    $('.canvas').append(renderer.domElement);
 
-    $('.canvas-model-preview').append(renderer.domElement);
-
-    var controls = new THREE.OrbitControls(camera, document.querySelector('.canvas-model-preview'));
+    var controls = new THREE.OrbitControls(camera, document.querySelector('#canvas-model-preview'));
     controls.addEventListener('change', render);
 
     function render() {
@@ -92,8 +98,8 @@ define([], function () {
     animate();
 
     function animate() {
-//        var d = clock.getDelta();
-//        controls.update(d);
+        //        var d = clock.getDelta();
+        //        controls.update(d);
         window.requestAnimationFrame(animate);
         render()
     }
@@ -136,6 +142,38 @@ define([], function () {
             $.post('/models/web/update_model_option', data, function (e) {
                 alert(e);
             });
+        }
+    });
+
+    function resize(w, h) {
+        $('.canvas').css({
+            width: w + 'px',
+            height: h + 'px'
+        });
+        $('#canvas-model-preview').css({
+            width: w + 'px',
+            height: h + 'px'
+        });
+        renderer.setSize(w, h);
+    }
+
+    var isFull = false;
+    $('.fullscreen').on('click', function () {
+        if (isFull) {
+            resize(scene_width, scene_height);
+            fullscreen.exitFull();
+        } else {
+            console.log('full');
+            fullscreen.full(document.getElementsByClassName('canvas')[0]);
+            resize(screen_width, screen_height);
+        }
+        isFull = !isFull;
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.which == 27) {
+            console.log('退出全屏');
+            resize(scene_width, scene_height);
         }
     });
 });

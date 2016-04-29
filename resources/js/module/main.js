@@ -16,7 +16,8 @@ require.config({
         util: 'common/util',
         plupload: 'common/plupload.full.min',
         qiniu: 'common/qiniu.min',
-        tplM: 'common/tpl'
+        tplM: 'common/tpl',
+        fullscreen:'common/fullsrceen'
     },
     shim: {
         'bootstrap': {

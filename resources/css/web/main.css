@@ -5,11 +5,13 @@
   left: 50%;
   margin-left: -200px;
   transition: all .3s;
+  -webkit-transform: translate(-300%, 0);
   transform: translate(-300%, 0);
   text-align: center;
   z-index: 999; }
 
 .panel_popup.show {
+  -webkit-transform: translate(0, 0);
   transform: translate(0, 0); }
 
 #progress {
@@ -73,7 +75,8 @@ textarea {
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12); }
 
 .canvas-model-preview {
-  position: relative; }
+  position: relative;
+  padding: 0; }
 
 .canvas-model-preview .preview-img {
   position: absolute;
@@ -87,3 +90,12 @@ textarea {
   bottom: 0;
   width: 90%;
   z-index: 999; }
+
+.fullscreen {
+  position: absolute;
+  bottom: 0%;
+  right: 15px;
+  z-index: 9999;
+  width: 20px;
+  height: 20px;
+  background: #fff; }

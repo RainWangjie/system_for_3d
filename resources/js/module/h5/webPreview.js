@@ -1,6 +1,5 @@
 define([], function () {
     console.log('h5页面模型预览');
-    console.log('PC端模型预览改版!!!');
     var scene_width = $('.canvas-model-preview').width(),
         scene_height = scene_width / 1.5;
     var scene = new THREE.Scene();
@@ -29,6 +28,7 @@ define([], function () {
             scene.add(model);
             $('.canvas-model-preview .preview-img').remove();
             $('.canvas-model-preview .progress').remove();
+            $('.canvas-model-preview').append(renderer.domElement);
         }, onProgress, onError);
     });
 
@@ -64,7 +64,6 @@ define([], function () {
     var renderer = new THREE.WebGLRenderer({antialiasing: true});
     renderer.setSize(scene_width, scene_height);
 
-    $('.canvas-model-preview').append(renderer.domElement);
 
     var controls = new THREE.OrbitControls(camera, document.querySelector('.canvas-model-preview'));
     controls.addEventListener('change', render);
