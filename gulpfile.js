@@ -6,6 +6,7 @@ var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var sass = require('gulp-sass');
+var autoprefix = require('gulp-autoprefixer');
 
 gulp.task('default',['css', 'images','js'],function(){
     console.log('gulp完成，yeah！！！');
@@ -16,6 +17,7 @@ gulp.task("images", function () {
 });
 gulp.task('sass', function () {
     return gulp.src('resources/sass/*/*.scss')
+        .pipe(autoprefix('last 2 versions'))
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('resources/css/'));
 });

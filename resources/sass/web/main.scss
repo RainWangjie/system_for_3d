@@ -96,6 +96,7 @@ textarea {
 //web端模型预览
 .canvas-model-preview {
   position: relative;
+  padding: 0;
 }
 
 .canvas-model-preview .preview-img {
@@ -111,4 +112,13 @@ textarea {
   bottom: 0;
   width: 90%;
   z-index: 999;
+}
+.fullscreen{
+  position: absolute;
+  bottom: 0%;
+  right: 15px;
+  z-index: 9999;
+  width:20px;
+  height: 20px;
+  background: #fff;
 }
