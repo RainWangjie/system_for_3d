@@ -81,7 +81,8 @@ body {
   text-align: center; }
 
 .canvas-model-preview {
-  background: #000; }
+  background: #000;
+  text-align: center; }
 
 .model-message {
   padding: 10px;
@@ -109,5 +110,7 @@ body {
   line-height: 20px;
   padding: 0 5px; }
 
-.model-vr {
-  width: 30px; }
+.model-vr a {
+  width: 30px;
+  display: inline-block;
+  margin-right: 10px; }

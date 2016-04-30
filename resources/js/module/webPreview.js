@@ -22,8 +22,8 @@ define(['fullscreen'], function (fullscreen) {
 
     init();
     //坐标系
-    console.log('是否支持配置:',is_model_option);
-    if(is_model_option){
+    console.log('是否支持配置:', is_model_option);
+    if (is_model_option) {
         var axisHelper = new THREE.AxisHelper(100);
         scene.add(axisHelper);
     }
