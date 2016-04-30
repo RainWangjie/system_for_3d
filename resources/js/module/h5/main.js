@@ -13,6 +13,7 @@ require.config({
         MTLLoader: 'common/MTLLoader',
         OBJMTLLoader: 'common/OBJMTLLoader',
         OrbitControls: 'common/OrbitControls',
+        VRControls:'module/h5/vr_camera',
         fullscreen:'common/fullsrceen'
     },
     shim: {

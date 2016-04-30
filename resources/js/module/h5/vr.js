@@ -1,13 +1,18 @@
 /**
  * Created by gewangjie on 16/4/29.
  */
-define([], function () {
+define(['fullscreen','VRControls'], function (fs,vr) {
     console.log('vr页面');
+    var screen_width = window.innerWidth,
+        screen_height =screen.availHeight,
+        screen_b = screen_width / screen_height;
     window.onorientationchange = function () {
         console.log(window.orientation);
         switch (window.orientation) {
             case 90:
                 $('.orientation').hide();
+                fs.full(document.getElementsByClassName('model_show')[0]);
+                $('.model_show').height(screen_width);
                 break;
             case -90:
             case 0:
@@ -17,10 +22,8 @@ define([], function () {
         }
     };
 
-    var screen_width = window.outerHeight,
-        screen_height = window.outerWidth,
-        screeb_b = screen_width / screen_height;
-    var scene_left = new THREE.Scene();
+    var scene = new THREE.Scene();
+    var model ='';
     //坐标系
     //var axisHelper = new THREE.AxisHelper(100);
     //scene.add(axisHelper);
@@ -42,10 +45,11 @@ define([], function () {
             model.rotation.x = model_option[1] / 180 * Math.PI;
             model.rotation.y = model_option[2] / 180 * Math.PI;
             model.rotation.z = model_option[3] / 180 * Math.PI;
+            model.position.set(model_option[4] || 0, model_option[5] || 0, model_option[6] || 0);
             scene.add(model);
-            $('.canvas-model-preview .preview-img').remove();
-            $('.canvas-model-preview .progress').remove();
-            $('.canvas-model-preview').append(renderer.domElement);
+            $('.orientation').html('请旋转手机');
+            $('.model_show_left').append(renderer_left.domElement);
+            $('.model_show_right').append(renderer_right.domElement);
         }, onProgress, onError);
     });
 
@@ -74,34 +78,29 @@ define([], function () {
 
     scene.add(new THREE.AmbientLight(0x101030));
 
-    var camera = new THREE.PerspectiveCamera(45, scene_width / scene_height, .1, 1000);
-    camera.position.set(200, 200, 200);
-    camera.lookAt(scene.position);
+    var camera_left = new THREE.PerspectiveCamera(45, 1 / (screen_b * 2), .1, 1000);
+    camera_left.position.set(200, 200, 200);
+    camera_left.lookAt(scene.position);
+    var camera_right = camera_left.clone();
 
-    var renderer = new THREE.WebGLRenderer({antialiasing: true});
-    renderer.setSize(scene_width, scene_height);
+    var renderer_left = new THREE.WebGLRenderer({antialiasing: true});
+    renderer_left.setSize(screen_height / 2, screen_width);
+
+    var renderer_right = new THREE.WebGLRenderer({antialiasing: true});
+    renderer_right.setSize(screen_height / 2, screen_width);
 
 
-    var controls = new THREE.OrbitControls(camera, document.querySelector('.canvas-model-preview'));
-    controls.addEventListener('change', render);
+    vr(camera_left,scene,camera_right,scene,render,200);
 
     function render() {
-        renderer.render(scene, camera);
-    }
-
-    animate();
-
-    function animate() {
-//        var d = clock.getDelta();
-//        controls.update(d);
-        window.requestAnimationFrame(animate);
-        render()
+        renderer_left.render(scene, camera_left);
+        renderer_right.render(scene, camera_right);
     }
 
     var onProgress = function (xhr) {
         if (xhr.lengthComputable) {
             var percentComplete = xhr.loaded / xhr.total * 100;
-            $('.progress-bar').css('width', Math.round(percentComplete, 2) + '%');
+            $('.orientation').html('模型加载' + Math.round(percentComplete, 2) + '%');
             console.log(Math.round(percentComplete, 2) + '% downloaded');
         }
     };
