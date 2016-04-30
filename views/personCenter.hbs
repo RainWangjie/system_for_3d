@@ -1,0 +1,88 @@
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">头像：</label>
+
+        <div class="col-sm-10 user-avtar">
+            <img src="{{user.avatar}}" width="100" height="100" id="user_avatar">
+            <button class="btn btn-sm btn-success" id="btn_add_avatar">添加</button>
+            <span id="progress"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">昵称：</label>
+
+        <div class="col-sm-10">
+            <input type="text" placeholder="请输入昵称" value="{{user.name}}" id="user_name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">手机号：</label>
+
+        <div class="col-sm-10">
+            <input type="tel" placeholder="请输入手机号" value="{{user.mobile}}" id="user_mobile" readonly>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">性别：</label>
+
+        <div class="col-sm-10">
+            <select id="user_sex">
+                <option value="1">男</option>
+                <option value="2">女</option>
+                <option value="3">未设定</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">出生年月：</label>
+
+        <div class="col-sm-10">
+            <input type="date" value="{{user.birthday}}" id="user_birthday">
+        </div>
+    </div>
+    <div style="text-align: center">
+        <button class="btn" id="btn_update_message">保存</button>
+        <button class="btn" id="btn_reset_password">重置密码</button>
+    </div>
+
+    <div class="panel panel-success panel_popup panel_reset_password">
+        <div class="panel-heading">重置密码</div>
+        <div class="panel-body">
+            <label>原密码：<input type="password" placeholder="请输入原密码" id="old_password"></label><br>
+            <label>新密码：<input type="password" placeholder="请输入新密码" id="new_password_1"></label><br>
+            <label>新密码：<input type="password" placeholder="请再次输入新密码" id="new_password_2"></label><br>
+        </div>
+        <div class="panel-footer">
+            <button class="btn btm-sm btn-success" id="btn_reset_password_1">重置</button>
+            <button class="btn btm-sm btn-danger" id="btn_reset_password_2">取消</button>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 user-model-list">
+
+</div>
+<script>
+    var user = {{{user}}};
+</script>
+<script id="tpl" type="text/html">
+    <%for(var i in model){
+    var item = model[i];%>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <a href="/users/webPreview/<%=item._id%>" class="model-preview-img">
+                <img src="<%=item.previewImg%>?imageView2/2/w/500" width="100%">
+            </a>
+            <div>
+                <span>模型名称：<%=item.name%></span><br>
+            <span>审核状态：
+                <%if(item.isPass){%>
+                审核通过
+                <%}else{%>
+                未审核
+                <%}%>
+            </span>
+            </div>
+        </div>
+    </div>
+    <%}%>
+</script>

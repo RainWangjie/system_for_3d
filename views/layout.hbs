@@ -1,10 +1,55 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
+    <link rel='stylesheet' href='/css/common/bootstrap.min.css'/>
+    <link rel='stylesheet' href='/css/common/global.css'/>
+    <link rel='stylesheet' href='/css/web/main.css'/>
+</head>
+<body>
+<div class="container">
+    <!--导航拦-->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/index">3D model system</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/index">首页</a></li>
+                    <li><a href="/users/message">个人中心</a></li>
+                    <li><a href="/models/upload">上传模型</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">模型分类 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/models/list?style=1">人物</a></li>
+                            <li><a href="/models/list?style=2">建筑</a></li>
+                            <li><a href="/models/list?style=3">服饰</a></li>
+                            <li><a href="/models/list?style=4">数码</a></li>
+                            <li><a href="/models/list?style=5">几何</a></li>
+                            <li><a href="/models/list?style=6">动物</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {{#if user_name}}
+                        <li><a style="padding: 10px" href="/users/message"><img src="{{user_avatar}}?imageView/2/w/100" width="30px">&nbsp;{{user_name}}</a></li>
+                    {{else}}
+                        <li><a href="/users/login">注册登录</a></li>
+                    {{/if}}
+                    <li><a href="/users/logout">退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     {{{body}}}
-  </body>
+</div>
+<script data-main="/js/module/main" src="/js/common/require.min.js"></script>
+</body>
 </html>

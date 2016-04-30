@@ -1,0 +1,18 @@
+<div class="col-md-12 style-model-list">
+
+</div>
+<script id="tpl" type="text/html">
+    <%for(var i in model){
+    var item = model[i];%>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <a href="/models/web/<%=item.id%>" class="model-preview-img">
+                <img src="<%=item.previewImg%>" width="100%">
+            </a>
+            <div>
+                <span>模型名称：<%=item.name%></span><br>
+            </div>
+        </div>
+    </div>
+    <%}%>
+</script>
