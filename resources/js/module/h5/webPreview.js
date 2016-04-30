@@ -1,12 +1,14 @@
-define([], function () {
+define(['fullscreen'], function (fs) {
     console.log('h5页面模型预览');
-    var scene_width = $('.canvas-model-preview').width(),
-        scene_height = scene_width / 1.5;
+    var screen_width = window.innerWidth,
+        screen_height = window.innerHeight,
+        screen_b = screen_width / screen_height,
+        scene_width = screen_width,
+        scene_height = scene_width * screen_b;
     var scene = new THREE.Scene();
-    var clock = new THREE.Clock();
     //坐标系
-    var axisHelper = new THREE.AxisHelper(100);
-    scene.add(axisHelper);
+    //var axisHelper = new THREE.AxisHelper(100);
+    //scene.add(axisHelper);
     //obj+mtl
     THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader);
     var mtlLorder = new THREE.MTLLoader();
@@ -57,7 +59,7 @@ define([], function () {
 
     scene.add(new THREE.AmbientLight(0x101030));
 
-    var camera = new THREE.PerspectiveCamera(45, scene_width / scene_height, .1, 1000);
+    var camera = new THREE.PerspectiveCamera(45, 1 / screen_b, .1, 1000);
     camera.position.set(200, 200, 200);
     camera.lookAt(scene.position);
 
@@ -91,5 +93,37 @@ define([], function () {
     var onError = function (xhr) {
     };
 
+    var isFull = false;
+    $('.fullscreen').on('tap', function () {
+        if (window.orientation !== 90) {
+            alert('请旋转屏幕！')
+        }
+    });
+    function resize(w, h, b) {
+        $('canvas').css({
+            width: w + 'px',
+            height: h + 'px'
+        });
+        $('.canvas-model-preview').css({
+            width: '100%',
+            height: h + 'px'
+        });
+        renderer.setSize(w, h);
+    }
 
+    window.onorientationchange = function () {
+        switch (window.orientation) {
+            case -90:
+            case 90:
+                console.log('full');
+                fs.full(document.getElementsByClassName('canvas-model-preview')[0]);
+                resize(screen_height, screen_width);
+                break;
+            case 0:
+            case 180:
+                resize(scene_width, scene_height);
+                fs.exitFull();
+                break;
+        }
+    }
 });

@@ -13,6 +13,7 @@ require.config({
         MTLLoader: 'common/MTLLoader',
         OBJMTLLoader: 'common/OBJMTLLoader',
         OrbitControls: 'common/OrbitControls',
+        fullscreen:'common/fullsrceen'
     },
     shim: {
         'tplM':{
@@ -35,6 +36,9 @@ require.config({
         },
         'module/h5/webPreview': {
             deps: ['OrbitControls', 'OBJMTLLoader', 'stat']
+        },
+        'module/h5/vr':{
+            deps:['OBJMTLLoader']
         }
     }
 });
