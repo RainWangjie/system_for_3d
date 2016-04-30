@@ -27,6 +27,7 @@ define(['fullscreen'], function (fs) {
             model.rotation.x = model_option[1] / 180 * Math.PI;
             model.rotation.y = model_option[2] / 180 * Math.PI;
             model.rotation.z = model_option[3] / 180 * Math.PI;
+            model.position.set(model_option[4] || 0, model_option[5] || 0, model_option[6] || 0);
             scene.add(model);
             $('.canvas-model-preview .preview-img').remove();
             $('.canvas-model-preview .progress').remove();

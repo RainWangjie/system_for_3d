@@ -4,16 +4,11 @@
     <meta charset="UTF-8">
     <title>{{title}}--VR</title>
     <meta name="viewport"
-          content="user-scalable=0,width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1">
+          content="user-scalable=0,width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1,minimal-ui">
     <style>
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
         body {
             margin: 0;
+            background: #000;
         }
 
         .orientation {
@@ -29,16 +24,13 @@
             z-index: 9999;
         }
         .model_show{
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
+            text-align: center;
         }
         .model_show div{
+            float: left;
             width: 50%;
             height: 100%;
-            float: left;
             box-sizing: border-box;
         }
     </style>
@@ -49,12 +41,11 @@
     <div class="model_show_right"></div>
 </div>
 <div class="orientation">
-    请旋转手机
+
 </div>
 <script data-main="/js/module/h5/main" src="/js/common/require.min.js"></script>
 <script>
-    var model_id = '{{model._id}}',
-            objUrl = '{{model.objUrl}}',
+    var objUrl = '{{model.objUrl}}',
             mtlUrl = '{{model.mtlUrl}}',
             model_option = [{{model.modelOption}}];
 </script>

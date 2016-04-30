@@ -12,6 +12,7 @@ define([], function () {
 
     //全屏
     function requestFullscreen(elem) {
+        console.log('触发全屏');
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
         }
