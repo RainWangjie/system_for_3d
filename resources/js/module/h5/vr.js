@@ -47,7 +47,7 @@ define(['fullscreen','VRControls'], function (fs,vr) {
             model.rotation.z = model_option[3] / 180 * Math.PI;
             model.position.set(model_option[4] || 0, model_option[5] || 0, model_option[6] || 0);
             scene.add(model);
-            $('.orientation').html('请旋转手机');
+            $('.orientation').html('请旋转手机，并放入cardboard');
             $('.model_show_left').append(renderer_left.domElement);
             $('.model_show_right').append(renderer_right.domElement);
         }, onProgress, onError);
