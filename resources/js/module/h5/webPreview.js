@@ -1,7 +1,7 @@
 define(['fullscreen'], function (fs) {
     console.log('h5页面模型预览');
     var screen_width = window.innerWidth,
-        screen_height = window.innerHeight,
+        screen_height = screen.availHeight,
         screen_b = screen_width / screen_height,
         scene_width = screen_width,
         scene_height = scene_width * screen_b;
