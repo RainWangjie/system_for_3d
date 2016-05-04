@@ -78,6 +78,12 @@ textarea {
   position: relative;
   padding: 0; }
 
+.canvas {
+  background: url("http://7xs7nv.com1.z0.glb.clouddn.com/bg.jpeg");
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat; }
+
 .canvas-model-preview .preview-img {
   position: absolute;
   top: 0;
@@ -93,8 +99,8 @@ textarea {
 
 .fullscreen {
   position: absolute;
-  bottom: 0%;
-  right: 15px;
+  bottom: 5px;
+  right: 10px;
   z-index: 9999;
   width: 20px;
   height: 20px;

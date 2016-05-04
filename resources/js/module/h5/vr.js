@@ -1,10 +1,10 @@
 /**
  * Created by gewangjie on 16/4/29.
  */
-define(['fullscreen','VRControls'], function (fs,vr) {
+define(['fullscreen', 'VRControls'], function (fs, vr) {
     console.log('vr页面');
-    var screen_width = window.innerWidth,
-        screen_height =screen.availHeight,
+    var screen_width = window.innerWidth * 2,
+        screen_height = screen.availHeight * 2,
         screen_b = screen_width / screen_height;
     window.onorientationchange = function () {
         console.log(window.orientation);
@@ -12,7 +12,7 @@ define(['fullscreen','VRControls'], function (fs,vr) {
             case 90:
                 $('.orientation').hide();
                 fs.full(document.getElementsByClassName('model_show')[0]);
-                $('.model_show').height(screen_width);
+                $('.model_show').height(screen_width/2);
                 break;
             case -90:
             case 0:
@@ -23,7 +23,7 @@ define(['fullscreen','VRControls'], function (fs,vr) {
     };
 
     var scene = new THREE.Scene();
-    var model ='';
+    var model = '';
     //坐标系
     //var axisHelper = new THREE.AxisHelper(100);
     //scene.add(axisHelper);
@@ -41,7 +41,6 @@ define(['fullscreen','VRControls'], function (fs,vr) {
         objLoader.load(objUrl, function (obj_model) {
             model = obj_model;
             model.scale.set(model_option[0], model_option[0], model_option[0]);
-            //obj_model.position.y = -50;
             model.rotation.x = model_option[1] / 180 * Math.PI;
             model.rotation.y = model_option[2] / 180 * Math.PI;
             model.rotation.z = model_option[3] / 180 * Math.PI;
@@ -90,7 +89,7 @@ define(['fullscreen','VRControls'], function (fs,vr) {
     renderer_right.setSize(screen_height / 2, screen_width);
 
 
-    vr(camera_left,scene,camera_right,scene,render,200);
+    vr(camera_left, scene, camera_right, scene, render, 200);
 
     function render() {
         renderer_left.render(scene, camera_left);

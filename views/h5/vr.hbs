@@ -15,7 +15,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
+            width: 100%;
             bottom: 0;
             background: #000;
             color: #fff;
@@ -24,7 +24,8 @@
             padding-top: 100px;
             z-index: 999;
         }
-        .parameter{
+
+        .parameter {
             display: none;
             position: fixed;
             margin-top: 20px;
@@ -34,17 +35,24 @@
             z-index: 9999;
             color: #fff;
         }
-        .model_show{
+
+        .model_show {
             width: 100%;
             text-align: center;
         }
-        .model_show div{
+
+        .model_show div {
             float: left;
             width: 50%;
             height: 100%;
             box-sizing: border-box;
         }
-        .model_show_left{
+
+        .model_show div canvas {
+            zoom: .5;
+        }
+
+        .model_show_left {
             border-right: 1px solid #fff;
         }
     </style>
@@ -58,7 +66,7 @@
     alpha:<span id="alpha"></span><br>
     beta:<span id="beta"></span><br>
     gamma:<span id="gamma"></span><br>
-    相机坐标:<span id =camera></span>
+    相机坐标:<span id=camera></span>
 </div>
 <div class="orientation">
 
