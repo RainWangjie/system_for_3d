@@ -22,7 +22,17 @@
             font-size: 30px;
             text-align: center;
             padding-top: 100px;
+            z-index: 999;
+        }
+        .parameter{
+            display: none;
+            position: fixed;
+            margin-top: 20px;
+            width: 100%;
+            text-align: center;
+            top: 0;
             z-index: 9999;
+            color: #fff;
         }
         .model_show{
             width: 100%;
@@ -34,12 +44,21 @@
             height: 100%;
             box-sizing: border-box;
         }
+        .model_show_left{
+            border-right: 1px solid #fff;
+        }
     </style>
 </head>
 <body>
 <div class="model_show">
     <div class="model_show_left"></div>
     <div class="model_show_right"></div>
+</div>
+<div class="parameter">
+    alpha:<span id="alpha"></span><br>
+    beta:<span id="beta"></span><br>
+    gamma:<span id="gamma"></span><br>
+    相机坐标:<span id =camera></span>
 </div>
 <div class="orientation">
 

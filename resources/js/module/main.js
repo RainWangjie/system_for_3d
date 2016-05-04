@@ -12,6 +12,7 @@ require.config({
         OBJLoader: 'common/OBJLoader',
         MTLLoader: 'common/MTLLoader',
         OBJMTLLoader: 'common/OBJMTLLoader',
+        CombinedCamera:'CombinedCamera',
         OrbitControls: 'common/OrbitControls',
         util: 'common/util',
         plupload: 'common/plupload.full.min',
@@ -46,6 +47,9 @@ require.config({
         },
         'OrbitControls': {
             deps: ['three']
+        },
+        'CombinedCamera':{
+          deps:['three']
         },
         'module/webPreview': {
             deps: ['OrbitControls', 'OBJMTLLoader', 'stat']

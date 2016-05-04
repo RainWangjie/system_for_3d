@@ -49,6 +49,7 @@ define(['fullscreen'], function (fullscreen) {
             scene.add(model);
             $('.canvas-model-preview .preview-img').remove();
             $('.canvas-model-preview .progress').remove();
+            render();
         }, onProgress, onError);
     });
 
@@ -93,15 +94,6 @@ define(['fullscreen'], function (fullscreen) {
         stat.begin();
         renderer.render(scene, camera);
         stat.end();
-    }
-
-    animate();
-
-    function animate() {
-        //        var d = clock.getDelta();
-        //        controls.update(d);
-        window.requestAnimationFrame(animate);
-        render()
     }
 
     var onProgress = function (xhr) {
