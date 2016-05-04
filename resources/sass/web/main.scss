@@ -86,7 +86,7 @@ textarea {
 }
 
 //模型分类列表
-.user-model-list .panel,.style-model-list .panel {
+.user-model-list .panel, .style-model-list .panel {
   padding: 15px;
   border-radius: 2px;
   border: 0;
@@ -98,7 +98,12 @@ textarea {
   position: relative;
   padding: 0;
 }
-
+.canvas{
+  background: url("http://7xs7nv.com1.z0.glb.clouddn.com/bg.jpeg");
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .canvas-model-preview .preview-img {
   position: absolute;
   top: 0;
@@ -113,12 +118,13 @@ textarea {
   width: 90%;
   z-index: 999;
 }
-.fullscreen{
+
+.fullscreen {
   position: absolute;
-  bottom: 0%;
-  right: 15px;
+  bottom: 5px;
+  right: 10px;
   z-index: 9999;
-  width:20px;
+  width: 20px;
   height: 20px;
   background: #fff;
 }

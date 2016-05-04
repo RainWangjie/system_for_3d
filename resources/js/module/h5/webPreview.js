@@ -1,7 +1,7 @@
 define(['fullscreen'], function (fs) {
     console.log('h5页面模型预览');
-    var screen_width = window.innerWidth,
-        screen_height = screen.availHeight,
+    var screen_width = window.innerWidth * 2,
+        screen_height = screen.availHeight * 2,
         screen_b = screen_width / screen_height,
         scene_width = screen_width,
         scene_height = scene_width * screen_b;
@@ -23,7 +23,6 @@ define(['fullscreen'], function (fs) {
         objLoader.load(objUrl, function (obj_model) {
             model = obj_model;
             model.scale.set(model_option[0], model_option[0], model_option[0]);
-            //obj_model.position.y = -50;
             model.rotation.x = model_option[1] / 180 * Math.PI;
             model.rotation.y = model_option[2] / 180 * Math.PI;
             model.rotation.z = model_option[3] / 180 * Math.PI;
@@ -107,7 +106,7 @@ define(['fullscreen'], function (fs) {
         });
         $('.canvas-model-preview').css({
             width: '100%',
-            height: h + 'px'
+            height: h/2 + 'px'
         });
         renderer.setSize(w, h);
     }
