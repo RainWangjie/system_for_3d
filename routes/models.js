@@ -243,9 +243,11 @@ router.get('/web/:modelid', function (req, res, next) {
         }
         if (model) {//model存在
             UserEntity.findOne({_id: model.userId}, function (err, user) {
+                var date = new Date(model.createTime);
                 res.render('webPreview', {
                     title: model.name,
                     model: model,
+                    created_at: date.toLocaleDateString(),
                     model_user_name: user.name,
                     model_user_avatar: user.avatar,
                     model_user_sex: user.sex,
@@ -270,6 +272,9 @@ router.post('/web/update_model_option', function (req, res, next) {
         }
         if (model.userId == req.session.user_id) {
             update_model_option(req, res);
+        } else {
+            restResult = "您不是模型作者";
+            res.status(500).send(restResult);
         }
     });
 });
@@ -285,6 +290,9 @@ router.post('/web/edit_model_message', function (req, res, next) {
         }
         if (model.userId == req.session.user_id) {
             edit_model_message(req, res);
+        } else {
+            restResult = "您不是模型作者";
+            res.status(500).send(restResult);
         }
     });
 });

@@ -214,16 +214,19 @@ router.get('/webPreview/:modelid', wj_util.authorize, function (req, res, next) 
         if (model) {//model存在
             if (model.userId == req.session.user_id) {
                 UserEntity.findOne({_id: model.userId}, function (err, user) {
+                    var date = new Date(model.createTime);
                     StyleEntity.find(function (err, style) {
                         res.render('webPreview', {
                             title: model.name,
                             model: model,
+                            created_at: date.toLocaleDateString(),
                             model_user_name: user.name,
                             model_user_avatar: user.avatar,
                             model_user_sex: user.sex,
                             user_name: req.session.user_name,
                             user_avatar: req.session.user_avatar,
-                            is_model_option: true
+                            is_model_option: true,
+                            styleList:style
                         });
                     });
                 });
