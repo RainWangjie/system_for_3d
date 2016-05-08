@@ -24,7 +24,7 @@
                 <span>模型名称：<%=item.name%></span>
             </div>
             <div class="btn-group">
-                <button class="btn btn-sm btn-success model-audit-edit" data-id="<%=item.id%>">编辑</button>
+                <a href="/admin/webPreview/<%=item.id%>" class="btn btn-sm btn-success model-audit-edit">编辑</a>
                 <button class="btn btn-sm btn-danger model-audit-failed" data-id="<%=item.id%>">下架</button>
             </div>
         </div>

@@ -12,22 +12,38 @@
     </div>
     <div class="col-md-3">
         <img src="{{model_user_avatar}}?imageView2/2/w/100" width="40px"><br>
-        作者：{{model_user_name}}<br>
-        作品名：{{model.name}}<br>
-        描述：{{model.descriptions}}<br>
-        分类：{{model.typeId}}<br>
+        作者：<span>{{model_user_name}}</span><br>
+        作品名：<span id="model_name"></span>{{model.name}}</span><br>
+        描述：<span id="model_descriptions">{{model.descriptions}}</span><br>
+        分类：<span id="mdoel_typeId">{{model.typeId}}</span><br>
         上传时间：{{model.createTime}}
+        {{#if is_model_option}}
+            <button class="btn btn-sm btn-success btn-edit">编辑模型信息</button>
+        {{/if}}
+
     </div>
 </div>
-
-<div class="col-md-6 transform-panel">
-    作品名：{{model.name}}<br>
-    描述：{{model.descriptions}}<br>
-    分类：{{model.typeId}}<br>
-</div>
-
+{{styleList}}
 {{#if is_model_option}}
-    <div class="col-md-6 transform-panel show">
+    <div class="panel panel-success panel_popup panel_reset_password">
+        <div class="panel-heading">模型编辑</div>
+        <div class="panel-body" style="text-align: left">
+            <label>作品名：<input type="text" value="{{model.name}}" id="edit-name"></label><br>
+            <label>描述：<textarea id="edit-descriptions">{{model.descriptions}}</textarea></label><br>
+            <label>分类：<select id="edit-typeId">
+                {{#each styleList}}
+                    <option value="{{styleNum}}">{{styleName}}</option>
+                {{/each}}
+            </select>
+            </label>
+        </div>
+        <div class="panel-footer">
+            <button class="btn btm-sm btn-success" id="btn_model_save">保存</button>
+            <button class="btn btm-sm btn-danger" id="btn_cancal">取消</button>
+        </div>
+    </div>
+
+    <div class="col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading">勿移动缩放模型进行模型配置</div>
             <div class="panel-body">
@@ -93,5 +109,5 @@
             objUrl = '{{model.objUrl}}',
             mtlUrl = '{{model.mtlUrl}}',
             model_option = [{{model.modelOption}}],
-            is_model_option='{{is_model_option}}';
+            is_model_option = '{{is_model_option}}';
 </script>
