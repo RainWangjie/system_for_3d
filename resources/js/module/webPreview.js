@@ -192,9 +192,11 @@ define(['fullscreen'], function (fullscreen) {
 
     $('.btn-edit').on('click', function () {
         $('.panel_popup').addClass('show');
+        $('#edit-typeId').val(model_typeId);
     });
     $('.btn-model-save').on('click', function () {
         var data = {
+            model_id:model_id,
             name: $('#edit-name').val(),
             descriptions: $('#edit-descriptions').val(),
             typeId: $('#edit-typeId').val()
@@ -203,10 +205,10 @@ define(['fullscreen'], function (fullscreen) {
             alert(e);
             $('#model_name').html(data.name);
             $('#model_descriptions').html(data.descriptions);
-            $('#model_typeId').html(data.typeId);
+            $('.panel_popup').removeClass('show');
         });
     });
-    $('.btn-cancal').on('click', function () {
-        $('.panel_popup').addClass('show');
+    $('.btn-model-cancel').on('click', function () {
+        $('.panel_popup').removeClass('show');
     });
 });

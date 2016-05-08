@@ -13,17 +13,15 @@
     <div class="col-md-3">
         <img src="{{model_user_avatar}}?imageView2/2/w/100" width="40px"><br>
         作者：<span>{{model_user_name}}</span><br>
-        作品名：<span id="model_name"></span>{{model.name}}</span><br>
+        作品名：<span id="model_name">{{model.name}}</span><br>
         描述：<span id="model_descriptions">{{model.descriptions}}</span><br>
-        分类：<span id="mdoel_typeId">{{model.typeId}}</span><br>
-        上传时间：{{model.createTime}}
+        上传时间：{{created_at}}
         {{#if is_model_option}}
             <button class="btn btn-sm btn-success btn-edit">编辑模型信息</button>
         {{/if}}
 
     </div>
 </div>
-{{styleList}}
 {{#if is_model_option}}
     <div class="panel panel-success panel_popup panel_reset_password">
         <div class="panel-heading">模型编辑</div>
@@ -38,8 +36,8 @@
             </label>
         </div>
         <div class="panel-footer">
-            <button class="btn btm-sm btn-success" id="btn_model_save">保存</button>
-            <button class="btn btm-sm btn-danger" id="btn_cancal">取消</button>
+            <button class="btn btm-sm btn-success btn-model-save">保存</button>
+            <button class="btn btm-sm btn-danger btn-model-cancel">取消</button>
         </div>
     </div>
 
@@ -106,6 +104,7 @@
 
 <script>
     var model_id = '{{model._id}}',
+            model_typeId ='{{model.typeId}}',
             objUrl = '{{model.objUrl}}',
             mtlUrl = '{{model.mtlUrl}}',
             model_option = [{{model.modelOption}}],
