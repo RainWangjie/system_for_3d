@@ -5,6 +5,7 @@ var wj_util = require('../routes/wj_util');
 
 var UserEntity = require('../models/User').UserEntity;
 var ModelEntity = require('../models/Model').ModelEntity;
+var StyleEntity = require('../models/Style').StyleEntity;
 
 /* GET user page. */
 router.get('/login', function (req, res, next) {
@@ -213,15 +214,17 @@ router.get('/webPreview/:modelid', wj_util.authorize, function (req, res, next) 
         if (model) {//model存在
             if (model.userId == req.session.user_id) {
                 UserEntity.findOne({_id: model.userId}, function (err, user) {
-                    res.render('webPreview', {
-                        title: model.name,
-                        model: model,
-                        model_user_name: user.name,
-                        model_user_avatar: user.avatar,
-                        model_user_sex: user.sex,
-                        user_name: req.session.user_name,
-                        user_avatar: req.session.user_avatar,
-                        is_model_option: true
+                    StyleEntity.find(function (err, style) {
+                        res.render('webPreview', {
+                            title: model.name,
+                            model: model,
+                            model_user_name: user.name,
+                            model_user_avatar: user.avatar,
+                            model_user_sex: user.sex,
+                            user_name: req.session.user_name,
+                            user_avatar: req.session.user_avatar,
+                            is_model_option: true
+                        });
                     });
                 });
             } else {
@@ -231,6 +234,5 @@ router.get('/webPreview/:modelid', wj_util.authorize, function (req, res, next) 
         }
     });
 });
-
 
 module.exports = router;

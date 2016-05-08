@@ -109,4 +109,14 @@ define(['util', 'tplM'], function (util) {
             $('.user-model-list').html('您还没上传作品');
         }
     });
+
+    $('body').on('click','.model-delete',function(){
+        var id = $(this).data('id'),
+            name = $(this).data('name');
+        if(confirm('确认删除模型【'+name+'】')){
+            $.post('/web/delete_model/'+id,function(e){
+                alert(name+e);
+            });
+        }
+    })
 });

@@ -28,7 +28,7 @@ router.get('/upload', wj_util.authorize, function (req, res, next) {
             title: '上传模型',
             user_name: req.session.user_name,
             user_avatar: req.session.user_avatar,
-            styleList:style
+            styleList: style
         });
     });
 });
@@ -187,7 +187,7 @@ router.get('/list', function (req, res, next) {
 });
 //分类模型接口
 router.get('/list/style/:modelstyle', function (req, res, next) {
-    if(req.params.modelstyle == 0){
+    if (req.params.modelstyle == 0) {
         ModelEntity.find(function (err, model) {
             var restResult = '';
             if (err) {//查询异常
@@ -208,7 +208,7 @@ router.get('/list/style/:modelstyle', function (req, res, next) {
                 res.send(restResult);
             }
         });
-    }else{
+    } else {
         ModelEntity.find({isPass: true, typeId: req.params.modelstyle}, function (err, model) {
             var restResult = '';
             if (err) {//查询异常
@@ -288,6 +288,40 @@ router.post('/web/edit_model_message', function (req, res, next) {
         }
     });
 });
+//删除个人模型
+router.post('/web/delete_model/:modelid', function (req, res, next) {
+    ModelEntity.findOne({'_id': req.params.modelid}, function (err, model) {
+        var restResult = '';
+        if (err) {
+            restResult = "服务器异常";
+            res.status(500).send(restResult);
+            return;
+        }
+        if (model.userId == req.session.user_id) {
+            ModelEntity.remove({'_id': req.params.modelid}, function (err) {
+                var restResult = '';
+                if (err) {
+                    restResult = "服务器异常";
+                    res.status(500).send(restResult);
+                    return;
+                } else {
+                    localFileEntity.remove({modelId: req.params.modelid}, function (err) {
+                        if (err) {
+                            restResult = "服务器异常";
+                            res.status(500).send(restResult);
+                            return;
+                        } else {
+                            res.send('删除成功');
+                        }
+                    });
+                }
+            });
+        } else {
+            restResult = "您不是模型作者";
+            res.status(500).send(restResult);
+        }
+    });
+});
 
 function update_model_option(req, res) {
     ModelEntity.update({'_id': req.body.model_id}, {modelOption: JSON.parse(req.body.model_option)}, function (err, model) {
@@ -315,7 +349,7 @@ function edit_model_message(req, res) {
             return;
         }
         if (model) {
-            res.send('更新成功');
+            res.send('保存成功');
         }
     });
 }

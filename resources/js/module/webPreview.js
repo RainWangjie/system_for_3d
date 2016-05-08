@@ -189,4 +189,24 @@ define(['fullscreen'], function (fullscreen) {
             });
         }
     });
+
+    $('.btn-edit').on('click', function () {
+        $('.panel_popup').addClass('show');
+    });
+    $('.btn-model-save').on('click', function () {
+        var data = {
+            name: $('#edit-name').val(),
+            descriptions: $('#edit-descriptions').val(),
+            typeId: $('#edit-typeId').val()
+        };
+        $.post(editUrl, data, function (e) {
+            alert(e);
+            $('#model_name').html(data.name);
+            $('#model_descriptions').html(data.descriptions);
+            $('#model_typeId').html(data.typeId);
+        });
+    });
+    $('.btn-cancal').on('click', function () {
+        $('.panel_popup').addClass('show');
+    });
 });
