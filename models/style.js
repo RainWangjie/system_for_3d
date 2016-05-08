@@ -4,11 +4,12 @@
 var base = require('./Base');
 var ObjectId = base.ObjectId;
 var StyleScheme = new base.Schema({
+    styleNum: String,
     styleName: String,
     createTime: {type: Date, default: Date.now},//创建时间
     creator: {type: String, default: 'admin'},//创建时间
-    isExist:{type: Boolean, default: true},
-    deleteTime:Date
+    isExist: {type: Boolean, default: true},
+    deleteTime: Date
 });
 
 var StyleEntity = base.mongoose.model('StyleEntity', StyleScheme, 'style');//指定在数据库中的collection名称为style

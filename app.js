@@ -7,6 +7,8 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 
+var app = express();
+
 //路由
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -14,9 +16,6 @@ var models = require('./routes/models');
 var admin = require('./routes/admin');
 var qiniu = require('./routes/qiniu');
 var h5 = require('./routes/h5');
-
-
-var app = express();
 
 // view engine setup视图模版
 app.set('views', path.join(__dirname, 'views'));

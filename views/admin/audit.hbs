@@ -1,9 +1,13 @@
 <div class="col-md-12">
+    {{#unless models}}
+        暂无审核内容
+    {{/unless}}
     {{# each models}}
         <div class="col-md-4">
             <a href="/admin/webPreview/{{_id}}" class="model-preview-img">
                 <img src="{{previewImg}}" width="100%">
             </a>
+
             <div class="audit-message">
                 模型名称: {{name}}<br>
                 模型描述:{{descriptions}}<br>

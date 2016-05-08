@@ -24,7 +24,7 @@ define(['util'], function (util) {
         util.initQiniu(e, 'btn_add_preview', '模型预览图', 'jpg,png,gif,jpeg', previewAdded, previewUploaded, progress);
         util.initQiniu(e, 'btn_add_obj', '模型obj文件', 'obj', objAdded, objUploaded, progress);
         util.initQiniu(e, 'btn_add_mtl', '模型mtl文件', 'mtl', mtlAdded, mtlUploaded, progress);
-        util.initQiniu(e, 'btn_add_img', '模型贴图文件', 'jpg,png,tga,jpeg', imgAdded, imgUploaded, progress);
+        util.initQiniu(e, 'btn_add_img', '模型贴图文件', 'jpg,png,tga,jpeg,dds', imgAdded, imgUploaded, progress);
 
     });
     $('#upload-model').on('click', function () {

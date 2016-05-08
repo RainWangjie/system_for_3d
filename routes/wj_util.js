@@ -1,7 +1,8 @@
 /**
  * Created by gewangjie on 16/4/2.
  */
-module.exports = {
+
+var result = {
     authorize: function (req, res, next) {
         if (!req.session.user_id) {
             res.redirect('/users/login');
@@ -32,3 +33,4 @@ module.exports = {
         }
     }
 };
+module.exports = result;
