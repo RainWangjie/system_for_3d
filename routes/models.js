@@ -3,7 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
-var isLogin = require('../routes/isLogin');
+var wj_util = require('../routes/wj_util');
 //var qiniu_mySelf = require('../routes/qiniu');
 var http = require('http');
 var fs = require('fs');
@@ -16,7 +16,7 @@ var localFileEntity = require('../models/localFile').localFileEntity;
 
 
 //上传页面
-router.get('/upload', isLogin.authorize, function (req, res, next) {
+router.get('/upload', wj_util.authorize, function (req, res, next) {
     StyleEntity.find(function (err, style) {
         var restResult = '';
         if (err) {//查询异常
@@ -28,12 +28,12 @@ router.get('/upload', isLogin.authorize, function (req, res, next) {
             title: '上传模型',
             user_name: req.session.user_name,
             user_avatar: req.session.user_avatar,
-            styleList: style
+            styleList:style
         });
     });
 });
 //上传接口
-router.post('/upload', isLogin.authorize, function (req, res, next) {
+router.post('/upload', wj_util.authorize, function (req, res, next) {
     var imgUrlList = JSON.parse(req.body.imgUrl);
     var imgNameList = JSON.parse(req.body.imgName);
 
@@ -187,26 +187,49 @@ router.get('/list', function (req, res, next) {
 });
 //分类模型接口
 router.get('/list/style/:modelstyle', function (req, res, next) {
-    ModelEntity.find({isPass: true, typeId: req.params.modelstyle}, function (err, model) {
-        var restResult = '';
-        if (err) {//查询异常
-            restResult = "服务器异常";
-            console.log(err);
-            res.send(restResult);
-            return;
-        }
-        if (model) {//model存在
-            restResult = [];
-            for (var i in model) {
-                restResult.push({
-                    id: model[i]._id,
-                    name: model[i].name,
-                    previewImg: model[i].previewImg
-                })
+    if(req.params.modelstyle == 0){
+        ModelEntity.find(function (err, model) {
+            var restResult = '';
+            if (err) {//查询异常
+                restResult = "服务器异常";
+                console.log(err);
+                res.send(restResult);
+                return;
             }
-            res.send(restResult);
-        }
-    });
+            if (model) {//model存在
+                restResult = [];
+                for (var i in model) {
+                    restResult.push({
+                        id: model[i]._id,
+                        name: model[i].name,
+                        previewImg: model[i].previewImg
+                    })
+                }
+                res.send(restResult);
+            }
+        });
+    }else{
+        ModelEntity.find({isPass: true, typeId: req.params.modelstyle}, function (err, model) {
+            var restResult = '';
+            if (err) {//查询异常
+                restResult = "服务器异常";
+                console.log(err);
+                res.send(restResult);
+                return;
+            }
+            if (model) {//model存在
+                restResult = [];
+                for (var i in model) {
+                    restResult.push({
+                        id: model[i]._id,
+                        name: model[i].name,
+                        previewImg: model[i].previewImg
+                    })
+                }
+                res.send(restResult);
+            }
+        });
+    }
 });
 //web端指定模型预览
 router.get('/web/:modelid', function (req, res, next) {
@@ -237,6 +260,36 @@ router.get('/web/:modelid', function (req, res, next) {
 });
 //web端model_option更新
 router.post('/web/update_model_option', function (req, res, next) {
+    ModelEntity.findOne({_id: req.body.model_id}, function (err, model) {
+        var restResult = '';
+        if (err) {//查询异常
+            restResult = "服务器异常";
+            console.log(err);
+            res.send(restResult);
+            return;
+        }
+        if (model.userId == req.session.user_id) {
+            update_model_option(req, res);
+        }
+    });
+});
+//web端模型基本信息编辑
+router.post('/web/edit_model_message', function (req, res, next) {
+    ModelEntity.findOne({_id: req.body.model_id}, function (err, model) {
+        var restResult = '';
+        if (err) {//查询异常
+            restResult = "服务器异常";
+            console.log(err);
+            res.send(restResult);
+            return;
+        }
+        if (model.userId == req.session.user_id) {
+            edit_model_message(req, res);
+        }
+    });
+});
+
+function update_model_option(req, res) {
     ModelEntity.update({'_id': req.body.model_id}, {modelOption: JSON.parse(req.body.model_option)}, function (err, model) {
         var restResult = '';
         if (err) {
@@ -247,8 +300,25 @@ router.post('/web/update_model_option', function (req, res, next) {
             res.send('更新成功');
         }
     });
-});
+}
 
+function edit_model_message(req, res) {
+    ModelEntity.update({'_id': req.body.model_id}, {
+        name: req.body.name,
+        descriptions: req.body.descriptions,
+        typeId: req.body.typeId
+    }, function (err, model) {
+        var restResult = '';
+        if (err) {
+            restResult = "服务器异常";
+            res.status(500).send(restResult);
+            return;
+        }
+        if (model) {
+            res.send('更新成功');
+        }
+    });
+}
 
 //需要填写你的 Access Key 和 Secret Key
 qiniu.conf.ACCESS_KEY = '1xLOwApwb7DxXxFtR9czJ33LvGPULks4xABiiAX5';

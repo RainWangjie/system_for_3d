@@ -19,8 +19,15 @@
         上传时间：{{model.createTime}}
     </div>
 </div>
+
+<div class="col-md-6 transform-panel">
+    作品名：{{model.name}}<br>
+    描述：{{model.descriptions}}<br>
+    分类：{{model.typeId}}<br>
+</div>
+
 {{#if is_model_option}}
-    <div class="col-md-6">
+    <div class="col-md-6 transform-panel show">
         <div class="panel panel-primary">
             <div class="panel-heading">勿移动缩放模型进行模型配置</div>
             <div class="panel-body">
@@ -79,7 +86,6 @@
             </div>
         </div>
     </div>
-
 {{/if}}
 
 <script>

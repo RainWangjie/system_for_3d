@@ -1,0 +1,33 @@
+<div class="col-md-12">
+    <select class="model-type">
+        <option value="0" selected>全部</option>
+        <option value="1">人物</option>
+        <option value="2">建筑</option>
+        <option value="3">服饰</option>
+        <option value="4">数码</option>
+        <option value="5">几何</option>
+        <option value="6">动物</option>
+    </select>
+</div>
+<div class="col-md-12 model-list">
+
+</div>
+<script id="tpl" type="text/html">
+    <%for(var i in model){
+    var item = model[i];%>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <a href="/admin/webPreview/<%=item.id%>" class="model-preview-img">
+                <img src="<%=item.previewImg%>?imageView2/2/w/500" width="100%">
+            </a>
+            <div>
+                <span>模型名称：<%=item.name%></span>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-success model-audit-edit" data-id="<%=item.id%>">编辑</button>
+                <button class="btn btn-sm btn-danger model-audit-failed" data-id="<%=item.id%>">下架</button>
+            </div>
+        </div>
+    </div>
+    <%}%>
+</script>

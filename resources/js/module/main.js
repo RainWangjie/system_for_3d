@@ -68,6 +68,7 @@ var routes = [
     //管理员
     {url: '/admin/style', module: 'admin/style'},
     {url: '/admin/audit', module: 'admin/audit'},
+    {url: '/admin/model', module: 'admin/modelManger'},
     {url: '/admin/webPreview', module: 'module/webPreview'}
 
 ];

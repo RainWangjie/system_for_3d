@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var isLogin = require('../routes/isLogin');
+var wj_util = require('../routes/wj_util');
 
 var UserEntity = require('../models/User').UserEntity;
 var ModelEntity = require('../models/Model').ModelEntity;
@@ -9,10 +9,14 @@ var ModelEntity = require('../models/Model').ModelEntity;
 /* GET user page. */
 router.get('/login', function (req, res, next) {
     console.log('注册登录页');
-    res.render('users', {title: '注册登录页', user_name: req.session.user_name, user_avatar: req.session.user_avatar});
+    res.render('users', {
+        title: '注册登录页',
+        user_name: req.session.user_name,
+        user_avatar: req.session.user_avatar
+    });
 });
 /*个人信息页*/
-router.get('/message', isLogin.authorize, function (req, res, next) {
+router.get('/message', wj_util.authorize, function (req, res, next) {
     var restResult = '';
     UserEntity.findOne({_id: req.session.user_id}, {
         name: 1,
@@ -133,7 +137,7 @@ router.get('/logout', function (req, res, next) {
     res.redirect('/index');
 });
 //更新个人信息接口
-router.post('/update', isLogin.authorize, function (req, res, next) {
+router.post('/update', wj_util.authorize, function (req, res, next) {
     console.log(req.body);
     if (!req.body.name) {
         res.status(501).send('参数错误');
@@ -166,7 +170,7 @@ router.post('/update', isLogin.authorize, function (req, res, next) {
     });
 });
 //重置密码接口
-router.post('/resetPassword', isLogin.authorize, function (req, res, next) {
+router.post('/resetPassword', wj_util.authorize, function (req, res, next) {
     var restResult = '';
     UserEntity.findOne({_id: req.session.user_id}, {password: 1}, function (err, user) {
         if (err) {//查询异常
@@ -197,7 +201,7 @@ router.post('/resetPassword', isLogin.authorize, function (req, res, next) {
     });
 });
 //个人模型预览页
-router.get('/webPreview/:modelid', isLogin.authorize, function (req, res, next) {
+router.get('/webPreview/:modelid', wj_util.authorize, function (req, res, next) {
     ModelEntity.findOne({_id: req.params.modelid}, function (err, model) {
         var restResult = '';
         if (err) {//查询异常

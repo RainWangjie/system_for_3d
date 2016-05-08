@@ -108,6 +108,5 @@ define(['util', 'tplM'], function (util) {
         } else {
             $('.user-model-list').html('您还没上传作品');
         }
-
     });
 });

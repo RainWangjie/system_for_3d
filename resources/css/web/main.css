@@ -49,7 +49,8 @@
 .model-preview-img {
   display: block;
   position: relative;
-  width: 100%; }
+  width: 100%;
+  overflow: hidden; }
 
 .model-preview-img:after {
   content: '';
@@ -64,6 +65,9 @@
 textarea {
   width: 300px;
   height: 100px; }
+
+.imgList img {
+  margin: 10px; }
 
 .audit-message div {
   text-align: center; }
