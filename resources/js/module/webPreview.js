@@ -67,22 +67,43 @@ define(['fullscreen'], function (fullscreen) {
     scene.add(directionalLight);
 
     //3个聚光灯
-    var spotLight_1 = new THREE.SpotLight(0xffffff, 1.75, 2000, Math.PI / 3);
-    spotLight_1.position.set(0, 500, 500);
-    spotLight_1.target.position.set(0, 0, 0);
-    spotLight_1.castShadow = true;
-    scene.add(spotLight_1);
-    var spotLight_2 = new THREE.SpotLight(0xffffff, 1.75, 2000, Math.PI / 3);
-    spotLight_2.position.set(500, 0, 300);
-    spotLight_2.target.position.set(0, 0, 0);
-    spotLight_2.castShadow = true;
-    scene.add(spotLight_2);
-    var spotLight_3 = new THREE.SpotLight(0xffffff, 1.75, 2000, Math.PI / 3);
-    spotLight_3.position.set(-360, -360, 500);
-    spotLight_3.target.position.set(0, 0, 0);
-    spotLight_3.castShadow = true;
-    scene.add(spotLight_3);
+    //var spotLight_1 = new THREE.SpotLight(0xffffff, 1.75, 2000, Math.PI / 3);
+    //spotLight_1.position.set(0, 500, 500);
+    //spotLight_1.target.position.set(0, 0, 0);
+    //spotLight_1.castShadow = true;
+    //scene.add(spotLight_1);
+    //var spotLight_2 = new THREE.SpotLight(0xffffff, 1.75, 2000, Math.PI / 3);
+    //spotLight_2.position.set(500, 0, 300);
+    //spotLight_2.target.position.set(0, 0, 0);
+    //spotLight_2.castShadow = true;
+    //scene.add(spotLight_2);
+    //var spotLight_3 = new THREE.SpotLight(0xffffff, 1.75, 2000, Math.PI / 3);
+    //spotLight_3.position.set(-360, -360, 500);
+    //spotLight_3.target.position.set(0, 0, 0);
+    //spotLight_3.castShadow = true;
+    //scene.add(spotLight_3);
 
+    var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
+    hemiLight.color.setHSL(0.6, 1, 0.6);
+    hemiLight.groundColor.setHSL(0.095, 1, 0.75);
+    hemiLight.position.set(-200, 500, 0);
+    scene.add(hemiLight);
+
+    var dirLight = new THREE.DirectionalLight(0xffffff, 1);
+    dirLight.color.setHSL(0.1, 1, 0.95);
+    dirLight.position.set(-1, 1.75, 1);
+    dirLight.position.multiplyScalar(50);
+    dirLight.castShadow = true;
+    dirLight.shadowMapWidth = 2048;
+    dirLight.shadowMapHeight = 2048;
+    var d = 50;
+    dirLight.shadowCameraLeft = -d;
+    dirLight.shadowCameraRight = d;
+    dirLight.shadowCameraTop = d;
+    dirLight.shadowCameraBottom = -d;
+    dirLight.shadowCameraFar = 3500;
+    dirLight.shadowBias = -0.0001;
+    scene.add(dirLight);
 
     scene.add(new THREE.AmbientLight(0x444444));
 

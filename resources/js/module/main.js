@@ -12,13 +12,15 @@ require.config({
         OBJLoader: 'common/OBJLoader',
         MTLLoader: 'common/MTLLoader',
         OBJMTLLoader: 'common/OBJMTLLoader',
-        CombinedCamera:'CombinedCamera',
+        CombinedCamera:'common/CombinedCamera',
         OrbitControls: 'common/OrbitControls',
+        TrackballControls:'common/TrackballControls',
         util: 'common/util',
         plupload: 'common/plupload.full.min',
         qiniu: 'common/qiniu.min',
         tplM: 'common/tpl',
-        fullscreen:'common/fullsrceen'
+        fullscreen:'common/fullsrceen',
+        GeometryUtils:'common/GeometryUtils'
     },
     shim: {
         'bootstrap': {
@@ -48,8 +50,17 @@ require.config({
         'OrbitControls': {
             deps: ['three']
         },
+        'TrackballControls':{
+            deps:['three']
+        },
         'CombinedCamera':{
           deps:['three']
+        },
+        'GeometryUtils':{
+          deps:['three']
+        },
+        'module/index':{
+            deps:['TrackballControls','GeometryUtils']
         },
         'module/webPreview': {
             deps: ['OrbitControls', 'OBJMTLLoader', 'stat']
@@ -70,7 +81,6 @@ var routes = [
     {url: '/admin/audit', module: 'admin/audit'},
     {url: '/admin/model', module: 'admin/modelManger'},
     {url: '/admin/webPreview', module: 'module/webPreview'}
-
 ];
 
 var href = location.pathname;
