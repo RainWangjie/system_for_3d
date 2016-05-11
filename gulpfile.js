@@ -15,6 +15,10 @@ gulp.task("images", function () {
     return gulp.src("resources/images/**")
         .pipe(gulp.dest('public/images'));
 });
+gulp.task("font", function () {
+    return gulp.src("resources/font/**")
+        .pipe(gulp.dest('public/font'));
+});
 gulp.task('sass', function () {
     return gulp.src('resources/sass/*/*.scss')
         .pipe(autoprefix('last 2 versions'))
