@@ -4,6 +4,7 @@
 define([], function () {
     var camera, scene, renderer, dirLight, hemiLight, controls;
     var mixers = [];
+    var mesh_1, mesh_2;
     var clock = new THREE.Clock();
     init();
     function init() {
@@ -86,15 +87,15 @@ define([], function () {
                 vertexColors: THREE.FaceColors,
                 shading: THREE.FlatShading
             });
-            var mesh = new THREE.Mesh(geometry, material);
+            mesh_1 = new THREE.Mesh(geometry, material);
             var s = 0.35;
-            mesh.scale.set(s, s, s);
-            mesh.position.set(30, -36, 0);
-            mesh.rotation.y = -1;
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-            scene.add(mesh);
-            var mixer = new THREE.AnimationMixer(mesh);
+            mesh_1.scale.set(s, s, s);
+            mesh_1.position.set(30, -36, 0);
+            mesh_1.rotation.y = -1;
+            mesh_1.castShadow = true;
+            mesh_1.receiveShadow = true;
+            scene.add(mesh_1);
+            var mixer = new THREE.AnimationMixer(mesh_1);
             mixer.clipAction(geometry.animations[0]).setDuration(1).play();
             mixers.push(mixer);
         });
@@ -108,17 +109,18 @@ define([], function () {
                 vertexColors: THREE.FaceColors,
                 shading: THREE.FlatShading
             });
-            var mesh = new THREE.Mesh(geometry, material);
+            mesh_2 = new THREE.Mesh(geometry, material);
             var s = 0.35;
-            mesh.scale.set(s, s, s);
-            mesh.position.set(-40, 30, 0);
-            mesh.rotation.y = -0.9;
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-            scene.add(mesh);
-            var mixer = new THREE.AnimationMixer(mesh);
+            mesh_2.scale.set(s, s, s);
+            mesh_2.position.set(-40, 30, 0);
+            mesh_2.rotation.y = -0.9;
+            mesh_2.castShadow = true;
+            mesh_2.receiveShadow = true;
+            scene.add(mesh_2);
+            var mixer = new THREE.AnimationMixer(mesh_2);
             mixer.clipAction(geometry.animations[0]).setDuration(1).play();
             mixers.push(mixer);
+            console.log(mixer._root.position);
         });
 
         //FONT
@@ -147,6 +149,8 @@ define([], function () {
         for (var i = 0; i < mixers.length; i++) {
             mixers[i].update(delta);
         }
+        //mesh_1.position.z += .1;
+        //mesh_2.position.z += .1;
         renderer.render(scene, camera);
     }
 
@@ -249,5 +253,5 @@ define([], function () {
         if (!text) return;
         createText();
     }
-    
+
 });
