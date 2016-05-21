@@ -6,7 +6,7 @@ var ObjectId = base.ObjectId;
 var localFileScheme = new base.Schema({
     modelId:String,
     fileName:String,
-    qiniuUrl:String,
+    qiniuUrl:String
 });
 
 //指定在数据库中的collection名称为localFile

@@ -102,6 +102,10 @@ router.post('/upload', wj_util.authorize, function (req, res, next) {
             http.get('http://7xs7nv.com1.z0.glb.clouddn.com/' + req.body.mtlUrl, function (response) {
                 var filePath_download = './tempMTL/download_' + req.body.mtlName;
                 var filePath_upload = './tempMTL/upload_' + req.body.mtlName;
+                //var filePath_download = './tempMTL/download.mtl';
+                //var filePath_upload = './tempMTL/upload.mtl';
+                console.log('原文件路径：',filePath_download);
+                console.log('新文件路径：',filePath_upload);
                 var file = fs.createWriteStream(filePath_download);
                 response.pipe(file);
                 response.on('end', function () {
