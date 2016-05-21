@@ -196,10 +196,20 @@ router.post('/audit/failed/:modelid', wj_util.admin, function (req, res, next) {
 //模型管理
 router.get('/model', wj_util.admin, function (req, res, next) {
     console.log('后台管理-模型管理');
-    res.render('admin/model', {
-        title: '后台管理-模型管理',
-        user_name: req.session.user_name,
-        user_avatar: req.session.user_avatar
+
+    StyleEntity.find(function (err, style) {
+        var restResult = '';
+        if (err) {//查询异常
+            restResult = "服务器异常";
+            res.send(restResult);
+            return;
+        }
+        res.render('admin/model', {
+            title: '后台管理-模型管理',
+            styleList: style,
+            user_name: req.session.user_name,
+            user_avatar: req.session.user_avatar
+        });
     });
 });
 //模型参数编辑

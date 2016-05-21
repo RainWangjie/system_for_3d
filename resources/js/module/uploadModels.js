@@ -58,6 +58,7 @@ define(['util'], function (util) {
 
             $.post('/models/upload', model, function (e) {
                 alert(e);
+                location.href = '/users/message';
             });
         } else {
             alert('上传中稍等。。。')

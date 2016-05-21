@@ -156,7 +156,7 @@ define([], function () {
 
 
     //FONT
-    var text = "Welcome to 3D model system",
+    var text = "Welcome to 3D model world",
         height = 20,
         size = 60,
     //hover = 30,
