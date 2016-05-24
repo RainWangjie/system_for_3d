@@ -75,14 +75,16 @@
             <div>
                 <span>模型名称：<%=item.name%></span><br>
                 <span>审核状态：
-                    <%if(item.isPass){%>
+                    <%if(item.isPass == 1){%>
                     审核通过
+                    <%}else if(item.isPass == 2){%>
+                    审核未通过
                     <%}else{%>
-                    未审核
+                    待审核
                     <%}%>
                 </span>
             </div>
-            <div class="btn-group">
+            <div class="btn-center">
                 <a href="/users/webPreview/<%=item._id%>" class="btn btn-sm btn-success">编辑</a>
                 <button class="btn btn-sm btn-danger model-delete" data-id="<%=item.id%>" data-name="<%=item.name%>">删除</button>
             </div>

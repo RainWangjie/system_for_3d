@@ -1,11 +1,11 @@
 <div>
     <h1>类型管理</h1>
 
-    <div>
+    <div style="margin-bottom: 20px">
         <label>模型类型名称：<input type="text" placeholder="请输入模版类型名称" id="style_name"></label>
-        <button id="add_style">新增</button>
+        <button class="btn btn-sm btn-success" id="add_style">新增</button>
     </div>
-    <table>
+    <table class="table table-striped">
         <tr>
             <th>类型名称</th>
             <th>类型创建者</th>
@@ -17,7 +17,7 @@
                 <td>{{styleName}}</td>
                 <td>{{creator}}</td>
                 <td>{{createTime}}</td>
-                <td><button class="delete_style" data-id="{{_id}}" data-name="{{styleName}}">删除</button></td>
+                <td><button class="btn btn-sm btn-danger delete_style" data-id="{{_id}}" data-name="{{styleName}}">删除</button></td>
             </tr>
         {{/each}}
     </table>

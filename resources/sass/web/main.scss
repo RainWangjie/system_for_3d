@@ -89,7 +89,7 @@ textarea {
 }
 
 //模型分类列表
-.user-model-list .panel, .style-model-list .panel {
+.user-model-list .panel, .style-model-list .panel ,.model-list .panel{
   padding: 15px;
   border-radius: 2px;
   border: 0;
@@ -130,4 +130,17 @@ textarea {
   width: 20px;
   height: 20px;
   background: #fff;
+}
+//后台
+.admin-index{
+  width: 100%;
+  display: flex;
+}
+.admin-index a{
+  flex: 1;
+  margin: 10px;
+  height: 100px;
+  line-height: 100px;
+  border: 1px solid #646464;
+  text-align: center;
 }

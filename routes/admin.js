@@ -108,7 +108,7 @@ router.post('/deleteStyle', wj_util.admin, function (req, res, next) {
 //模型审核页面
 router.get('/audit', wj_util.admin, function (req, res, next) {
     console.log('后台管理-模型审核');
-    ModelEntity.find({isPass: false}, function (err, model) {
+    ModelEntity.find({isPass: 0}, function (err, model) {
         var restResult = '';
         if (err) {//查询异常
             restResult = "服务器异常";
@@ -161,7 +161,7 @@ router.get('/webPreview/:modelid', wj_util.admin, function (req, res, next) {
 });
 //模型审核通过接口
 router.post('/audit/pass/:modelid', wj_util.admin, function (req, res, next) {
-    ModelEntity.update({'_id': req.params.modelid}, {isPass: true}, function (err) {
+    ModelEntity.update({'_id': req.params.modelid}, {isPass: 1}, function (err) {
         var restResult = '';
         if (err) {
             restResult = "服务器异常";
@@ -174,22 +174,14 @@ router.post('/audit/pass/:modelid', wj_util.admin, function (req, res, next) {
 });
 //模型审核下架接口
 router.post('/audit/failed/:modelid', wj_util.admin, function (req, res, next) {
-    ModelEntity.remove({'_id': req.params.modelid}, function (err) {
+    ModelEntity.update({'_id': req.params.modelid}, {isPass: 2}, function (err) {
         var restResult = '';
         if (err) {
             restResult = "服务器异常";
             res.status(500).send(restResult);
             return;
         } else {
-            localFileEntity.remove({modelId: req.params.modelid}, function (err) {
-                if (err) {
-                    restResult = "服务器异常";
-                    res.status(500).send(restResult);
-                    return;
-                } else {
-                    res.send('下架成功');
-                }
-            });
+            res.send('审核成功');
         }
     });
 });

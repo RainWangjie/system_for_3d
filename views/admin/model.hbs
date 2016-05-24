@@ -1,9 +1,15 @@
-<div class="col-md-12">
-    <select class="model-type">
-        {{#each styleList}}
-            <option value="{{styleNum}}">{{styleName}}</option>
-        {{/each}}
-    </select>
+<div class="col-md-4 form-horizontal">
+    <div class="form-group">
+        <label class="col-md-4 control-label">模型类别：</label>
+        <div class="col-md-4">
+            <select class="model-type form-control">
+                {{#each styleList}}
+                    <option value="{{styleNum}}">{{styleName}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+
 </div>
 <div class="col-md-12 model-list">
 
@@ -19,7 +25,7 @@
             <div>
                 <span>模型名称：<%=item.name%></span>
             </div>
-            <div class="btn-group">
+            <div class="btn-center">
                 <a href="/admin/webPreview/<%=item.id%>" class="btn btn-sm btn-success model-audit-edit">编辑</a>
                 <button class="btn btn-sm btn-danger model-audit-failed" data-id="<%=item.id%>">下架</button>
             </div>

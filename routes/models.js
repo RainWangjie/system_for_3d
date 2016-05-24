@@ -192,7 +192,7 @@ router.get('/list', function (req, res, next) {
 //分类模型接口
 router.get('/list/style/:modelstyle', function (req, res, next) {
     if (req.params.modelstyle == 0) {
-        ModelEntity.find(function (err, model) {
+        ModelEntity.find({isPass: 1},function (err, model) {
             var restResult = '';
             if (err) {//查询异常
                 restResult = "服务器异常";
@@ -213,7 +213,7 @@ router.get('/list/style/:modelstyle', function (req, res, next) {
             }
         });
     } else {
-        ModelEntity.find({isPass: true, typeId: req.params.modelstyle}, function (err, model) {
+        ModelEntity.find({isPass: 1, typeId: req.params.modelstyle}, function (err, model) {
             var restResult = '';
             if (err) {//查询异常
                 restResult = "服务器异常";

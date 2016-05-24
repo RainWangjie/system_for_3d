@@ -36,3 +36,6 @@ a {
   20%, 40%, 60%, 80% {
     -webkit-transform: translateX(5px);
     transform: translateX(5px); } }
+
+.btn-center {
+  text-align: center; }
