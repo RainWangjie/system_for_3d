@@ -8,7 +8,7 @@ var ModelScheme = new base.Schema({
     descriptions: {type: String, default: '太懒了，这人啥都没说'},//描述
     userId: String,//创建者ID
     typeId: String,//分类ID
-    isPass: {type: Boolean, default: false},//是否通过审核
+    isPass: {type: String, default: 0},//是否通过审核
     isTranslate: {type: Boolean, default: false},//mtl文件字符串替换
     createTime: {type: Date, default: Date.now},//创建时间
     previewImg: String,//模型预览图
