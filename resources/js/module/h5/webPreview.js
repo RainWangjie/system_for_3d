@@ -15,6 +15,11 @@ define(['fullscreen'], function (fs) {
     mtlLorder.setBaseUrl('http://7xs7nv.com1.z0.glb.clouddn.com/');
     mtlLorder.setPath('http://7xs7nv.com1.z0.glb.clouddn.com/');
     mtlLorder.crossOrigin = '*';
+    mtlLorder.setMaterialOptions({
+        side: THREE.DoubleSide
+//        wrap: THREE.MirroredRepeatWrapping,
+//        normalizeRGB: true
+    });
     mtlLorder.load(mtlUrl, function (materials) {
         materials.preload();
         var objLoader = new THREE.OBJLoader();
@@ -29,7 +34,7 @@ define(['fullscreen'], function (fs) {
             model.position.set(model_option[4] || 0, model_option[5] || 0, model_option[6] || 0);
             scene.add(model);
             $('.canvas-model-preview .preview-img').remove();
-            $('.canvas-model-preview .progress').remove();
+            $('.canvas-model-preview .moblie-progress').remove();
             $('.canvas-model-preview').append(renderer.domElement);
         }, onProgress, onError);
     });
@@ -63,7 +68,7 @@ define(['fullscreen'], function (fs) {
     camera.position.set(200, 200, 200);
     camera.lookAt(scene.position);
 
-    var renderer = new THREE.WebGLRenderer({antialiasing: true});
+    var renderer = new THREE.WebGLRenderer({antialiasing: true, alpha: true});
     renderer.setSize(scene_width, scene_height);
 
 
@@ -86,7 +91,7 @@ define(['fullscreen'], function (fs) {
     var onProgress = function (xhr) {
         if (xhr.lengthComputable) {
             var percentComplete = xhr.loaded / xhr.total * 100;
-            $('.progress-bar').css('width', Math.round(percentComplete, 2) + '%');
+            $('.moblie-progress').html('模型加载'+ Math.round(percentComplete, 2) + '%');
             console.log(Math.round(percentComplete, 2) + '% downloaded');
         }
     };
@@ -106,7 +111,7 @@ define(['fullscreen'], function (fs) {
         });
         $('.canvas-model-preview').css({
             width: '100%',
-            height: h/2 + 'px'
+            height: h / 2 + 'px'
         });
         renderer.setSize(w, h);
     }

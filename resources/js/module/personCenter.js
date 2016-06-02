@@ -113,9 +113,11 @@ define(['util', 'tplM'], function (util) {
     $('body').on('click','.model-delete',function(){
         var id = $(this).data('id'),
             name = $(this).data('name');
+        var el = $(this);
         if(confirm('确认删除模型【'+name+'】')){
-            $.post('/web/delete_model/'+id,function(e){
+            $.post('/models/web/delete_model/'+id,function(e){
                 alert(name+e);
+                el.parents('.col-md-4').remove();
             });
         }
     })

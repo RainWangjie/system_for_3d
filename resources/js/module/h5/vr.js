@@ -12,7 +12,7 @@ define(['fullscreen', 'VRControls'], function (fs, vr) {
             case 90:
                 $('.orientation').hide();
                 fs.full(document.getElementsByClassName('model_show')[0]);
-                $('.model_show').height(screen_width/2);
+                $('.model_show').height(screen_width / 2);
                 break;
             case -90:
             case 0:
@@ -33,6 +33,11 @@ define(['fullscreen', 'VRControls'], function (fs, vr) {
     mtlLorder.setBaseUrl('http://7xs7nv.com1.z0.glb.clouddn.com/');
     mtlLorder.setPath('http://7xs7nv.com1.z0.glb.clouddn.com/');
     mtlLorder.crossOrigin = '*';
+    mtlLorder.setMaterialOptions({
+        side: THREE.DoubleSide
+//        wrap: THREE.MirroredRepeatWrapping,
+//        normalizeRGB: true
+    });
     mtlLorder.load(mtlUrl, function (materials) {
         materials.preload();
         var objLoader = new THREE.OBJLoader();
@@ -40,11 +45,11 @@ define(['fullscreen', 'VRControls'], function (fs, vr) {
         objLoader.setPath('http://7xs7nv.com1.z0.glb.clouddn.com/');
         objLoader.load(objUrl, function (obj_model) {
             model = obj_model;
-            model.scale.set(model_option[0], model_option[0], model_option[0]);
+            model.scale.set(model_option[0] * .6, model_option[0] * .6, model_option[0] * .6);
             model.rotation.x = model_option[1] / 180 * Math.PI;
             model.rotation.y = model_option[2] / 180 * Math.PI;
             model.rotation.z = model_option[3] / 180 * Math.PI;
-            model.position.set(model_option[4] || 0, model_option[5] || 0, model_option[6] || 0);
+            model.position.set((model_option[4] * .6) || 0, (model_option[5] * .6) || 0, (model_option[6] * .6) || 0);
             scene.add(model);
             $('.orientation').html('请旋转手机，并放入cardboard');
             $('.model_show_left').append(renderer_left.domElement);
@@ -82,10 +87,10 @@ define(['fullscreen', 'VRControls'], function (fs, vr) {
     camera_left.lookAt(scene.position);
     var camera_right = camera_left.clone();
 
-    var renderer_left = new THREE.WebGLRenderer({antialiasing: true});
+    var renderer_left = new THREE.WebGLRenderer({antialiasing: true, alpha: true});
     renderer_left.setSize(screen_height / 2, screen_width);
 
-    var renderer_right = new THREE.WebGLRenderer({antialiasing: true});
+    var renderer_right = new THREE.WebGLRenderer({antialiasing: true, alpha: true});
     renderer_right.setSize(screen_height / 2, screen_width);
 
 
