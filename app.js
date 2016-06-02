@@ -35,7 +35,7 @@ app.use(cookieParser());
 app.use(session({
     secret: '12345',
     name: 'system',   //这里的name值得是cookie的name，默认cookie的name是：connect.sid
-    cookie: {maxAge: 600000 },  //设置maxAge是80000ms，即80s后session和相应的cookie失效过期
+    cookie: {maxAge: 600000},  //设置maxAge是80000ms，即80s后session和相应的cookie失效过期
     resave: false,
     saveUninitialized: true
 }));
@@ -44,7 +44,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //首页重定向到/index
-app.get('/',function(req,res){
+app.get('/', function (req, res) {
+    console.log(req.headers['user-agent']);
     console.log('首页重定向!');
     res.redirect('/index');
 });
@@ -52,11 +53,11 @@ app.get('/',function(req,res){
 app.use('/index', routes);
 app.use('/users', users);
 app.use('/models', models);
-app.use('/h5',h5);
+app.use('/h5', h5);
 //routes后台中间件
 app.use('/admin', admin);
 //获取qiniu的token
-app.use('/qiniu',qiniu);
+app.use('/qiniu', qiniu);
 
 
 //routes移动端中间件
