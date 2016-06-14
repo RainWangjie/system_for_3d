@@ -20,7 +20,8 @@ require.config({
         qiniu: 'common/qiniu.min',
         tplM: 'common/tpl',
         fullscreen:'common/fullsrceen',
-        GeometryUtils:'common/GeometryUtils'
+        GeometryUtils:'common/GeometryUtils',
+        qrcode:'common/qrcode'
     },
     shim: {
         'bootstrap': {
@@ -63,7 +64,7 @@ require.config({
             deps:['TrackballControls','GeometryUtils']
         },
         'module/webPreview': {
-            deps: ['OrbitControls', 'OBJMTLLoader', 'stat']
+            deps: ['OrbitControls', 'OBJMTLLoader', 'stat','qrcode']
         }
     }
 });

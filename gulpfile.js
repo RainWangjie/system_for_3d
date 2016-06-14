@@ -8,7 +8,7 @@ var minifyCSS = require('gulp-minify-css');
 var sass = require('gulp-sass');
 var autoprefix = require('gulp-autoprefixer');
 
-gulp.task('default',['css', 'images','js'],function(){
+gulp.task('default', ['css', 'images', 'js'], function () {
     console.log('gulp完成，yeah！！！');
 });
 gulp.task("images", function () {
@@ -45,4 +45,18 @@ gulp.task("js", function () {
     return gulp.src("resources/js/module/*.js")
         .pipe(uglify())
         .pipe(gulp.dest("public/js/module"));
+});
+gulp.task("move", function (cb) {
+    gulp.src("public/**")
+        .pipe(gulp.dest("/Users/gewangjie/Rain/work/3dworld/appid37a947e0bb/public"));
+    console.log('finish public');
+    gulp.src("views/**")
+        .pipe(gulp.dest("/Users/gewangjie/Rain/work/3dworld/appid37a947e0bb/views"));
+    console.log('finish views');
+    gulp.src("routes/**")
+        .pipe(gulp.dest("/Users/gewangjie/Rain/work/3dworld/appid37a947e0bb/routes"));
+    console.log('finish routes');
+    gulp.src("resources/**")
+        .pipe(gulp.dest("/Users/gewangjie/Rain/work/3dworld/appid37a947e0bb/resources"));
+    console.log('finish resources');
 });
