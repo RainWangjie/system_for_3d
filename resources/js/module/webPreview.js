@@ -40,6 +40,7 @@ define(['fullscreen'], function (fullscreen) {
     });
     mtlLorder.load(mtlUrl, function (materials) {
         materials.preload();
+        materials_wireframe = materials.materials.initialShadingGroup;
         var objLoader = new THREE.OBJLoader();
         objLoader.setMaterials(materials);
         objLoader.setPath('http://7xs7nv.com1.z0.glb.clouddn.com/');
@@ -56,7 +57,6 @@ define(['fullscreen'], function (fullscreen) {
             render();
         }, onProgress, onError);
     });
-
 
     var light = new THREE.PointLight(0xffffff);
     light.position.set(-100, 200, -100);
@@ -191,6 +191,13 @@ define(['fullscreen'], function (fullscreen) {
         model.rotation.z = model_option_new[3] / 180 * Math.PI;
         model.position.set(model_option_new[4], model_option_new[5], model_option_new[6]);
     });
+
+    $('#wireframe').on('change', function () {
+        console.log(model);
+        for (var i in model.children) {
+            model.children[i].material.wireframe = !model.children[i].material.wireframe;
+        }
+    });
     var updateUrl = '', editUrl = '';
     if (new RegExp(location.pathname).test('admin')) {
         updateUrl = '/admin/update_model_option';
@@ -217,7 +224,7 @@ define(['fullscreen'], function (fullscreen) {
     });
     $('.btn-model-save').on('click', function () {
         var data = {
-            model_id:model_id,
+            model_id: model_id,
             name: $('#edit-name').val(),
             descriptions: $('#edit-descriptions').val(),
             typeId: $('#edit-typeId').val()
@@ -231,5 +238,14 @@ define(['fullscreen'], function (fullscreen) {
     });
     $('.btn-model-cancel').on('click', function () {
         $('.panel_popup').removeClass('show');
+    });
+
+    new QRCode("qrcode", {
+        text: 'http://3dworld.duapp.com/h5/models/preview/' + model_id,
+        width: 180,
+        height: 180,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
     });
 });

@@ -110,6 +110,9 @@ textarea {
   height: 20px;
   background: #fff; }
 
+#qrcode {
+  margin-top: 20px; }
+
 .admin-index {
   width: 100%;
   display: -webkit-flex;

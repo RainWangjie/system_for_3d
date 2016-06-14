@@ -1,4 +1,5 @@
 
+
 body {
   margin: 0;
 }
@@ -87,7 +88,7 @@ body {
   zoom: .5;
 }
 
-.panel-item .name {
+.panel-item .name{
   height: 30px;
   font-size: 14px;
   text-align: center;
@@ -102,11 +103,9 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
-
-.canvas-model-preview canvas {
+.canvas-model-preview canvas{
   zoom: .5;
 }
-
 .model-message {
   padding: 10px;
   font-size: 14px;
@@ -126,15 +125,12 @@ body {
   border-radius: 5px;
   z-index: 999;
 }
-
 .model-user {
   display: flex;
 }
-
-.model-description, .model-created-at, .model-user {
+.model-description,.model-created-at,.model-user{
   margin-bottom: 10px;
 }
-
 .model-user-avatar {
   width: 40px;
   height: 40px;
@@ -149,12 +145,11 @@ body {
   padding: 0 5px;
 }
 
-.model-vr a {
+.model-vr a{
   width: 30px;
   display: inline-block;
   margin-right: 10px;
 }
-
 //vr
 .orientation {
   position: fixed;
