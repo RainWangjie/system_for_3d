@@ -5,13 +5,11 @@
   left: 50%;
   margin-left: -200px;
   transition: all .3s;
-  -webkit-transform: translate(-300%, 0);
   transform: translate(-300%, 0);
   text-align: center;
   z-index: 999; }
 
 .panel_popup.show {
-  -webkit-transform: translate(0, 0);
   transform: translate(0, 0); }
 
 #progress {
@@ -115,12 +113,10 @@ textarea {
 
 .admin-index {
   width: 100%;
-  display: -webkit-flex;
   display: -ms-flexbox;
   display: flex; }
 
 .admin-index a {
-  -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   margin: 10px;

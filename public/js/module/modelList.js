@@ -1,1 +1,1 @@
-define(["tplM"],function(){var l=location.search.split("=")[1];$.get("/models/list/style/"+l,function(l){if(console.log(l),0!==l.length){var t=$.tpl("tpl",{model:l});$(".style-model-list").html(t)}else $(".style-model-list").html("该分类暂时没有模型可以查看")})});
+"use strict";define(["tplM"],function(){var l=location.search.split("=")[1];$.get("/models/list/style/"+l,function(l){if(console.log(l),0!==l.length){var t=$.tpl("tpl",{model:l});$(".style-model-list").html(t)}else $(".style-model-list").html("该分类暂时没有模型可以查看")})});
