@@ -16,6 +16,8 @@ var models = require('./routes/models');
 var admin = require('./routes/admin');
 var qiniu = require('./routes/qiniu');
 var h5 = require('./routes/h5');
+var vueTest = require('./routes/vueTest');
+
 
 // view engine setup视图模版
 app.set('views', path.join(__dirname, 'views'));
@@ -59,6 +61,8 @@ app.use('/admin', admin);
 //获取qiniu的token
 app.use('/qiniu', qiniu);
 
+//vue测试链接
+app.use('/vue',vueTest);
 
 //routes移动端中间件
 

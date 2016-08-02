@@ -3,6 +3,7 @@
  */
 'use strict';
 var gulp = require('gulp');
+var babel = require("gulp-babel");
 var uglify = require('gulp-uglify');
 var minifyCSS = require('gulp-minify-css');
 var sass = require('gulp-sass');
@@ -37,12 +38,15 @@ gulp.task("commonJS", function () {
 });
 gulp.task("js", function () {
     gulp.src("resources/js/module/h5/*.js")
+        .pipe(babel())
         .pipe(uglify())
         .pipe(gulp.dest("public/js/module/h5"));
     gulp.src("resources/js/admin/*.js")
+        .pipe(babel())
         .pipe(uglify())
         .pipe(gulp.dest("public/js/admin"));
     return gulp.src("resources/js/module/*.js")
+        .pipe(babel())
         .pipe(uglify())
         .pipe(gulp.dest("public/js/module"));
 });

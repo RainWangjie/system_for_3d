@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+<div id="app">
+    <span>Message is: ${ message }</span>
+    <br>
+    <input type="text" v-model="message" placeholder="edit me">
+</div>
+<script src="/js/common/vue.min.js"></script>
+<script>
+    Vue.config.delimiters = ['${', '}'];
+    new Vue({
+        el: '#app',
+        data: {
+            message: 'hello world'
+        }
+    });
+</script>
+</body>
+</html>
