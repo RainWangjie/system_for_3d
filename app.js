@@ -6,8 +6,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-
+var log = require('./Logger');
 var app = express();
+log.use(app);
 
 //路由
 var routes = require('./routes/index');
@@ -17,7 +18,6 @@ var admin = require('./routes/admin');
 var qiniu = require('./routes/qiniu');
 var h5 = require('./routes/h5');
 var vueTest = require('./routes/vueTest');
-
 
 // view engine setup视图模版
 app.set('views', path.join(__dirname, 'views'));
@@ -44,11 +44,10 @@ app.use(session({
 //静态文件资源存放
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 //首页重定向到/index
 app.get('/', function (req, res) {
     console.log(req.headers['user-agent']);
-    console.log('首页重定向!');
+    console.info('首页重定向!');
     res.redirect('/index');
 });
 
@@ -62,10 +61,9 @@ app.use('/admin', admin);
 app.use('/qiniu', qiniu);
 
 //vue测试链接
-app.use('/vue',vueTest);
+app.use('/vue', vueTest);
 
 //routes移动端中间件
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -95,6 +93,5 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;
